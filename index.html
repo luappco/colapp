@@ -3,42 +3,345 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta http-equiv="x-dns-prefetch-control" content="on"/>
 <title>LUAPP — App de Encuentros Discretos para Personas Casadas en LATAM</title>
-<meta name="description" content="LUAPP es la app de encuentros extraconyugales más discreta de Latinoamérica. 100% anónimo, seguro y sin rastros."/>
+<style>
+  /* System font fallbacks while web fonts load */
+  body{font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
+  .font-caslon{font-family:Georgia,'Times New Roman',serif}
+  .font-jakarta{font-family:system-ui,-apple-system,sans-serif}
+</style>
+<meta name="theme-color" content="#fff8f1"/>
+  <meta name="description" content="LUAPP es la app de encuentros extraconyugales más discreta de Latinoamérica. 100% anónimo, seguro y sin rastros."/>
 <link rel="canonical" href="https://luapp.co/"/>
 <link rel="icon" type="image/png" href="favicon.png"/>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
-<script>
-tailwind.config = {
-  theme: {
-    extend: {
-      colors: {
-        "primary":"#af2245","primary-container":"#d03d5c","on-primary":"#ffffff","on-primary-container":"#fffbff",
-        "secondary":"#a23e20","tertiary":"#61567d",
-        "surface":"#fff8f1","surface-container-lowest":"#ffffff","surface-container-low":"#f9f3eb",
-        "surface-container":"#f4ede5","surface-container-high":"#eee7df","surface-container-highest":"#e8e1da",
-        "on-surface":"#1e1b17","on-surface-variant":"#594143","inverse-surface":"#33302b",
-        "outline":"#8c7072","outline-variant":"#e0bec1","inverse-primary":"#ffb2ba",
-        "text-primary":"#2A1840","text-muted":"#7A6080",
-        "rose":"#F2C4CE","peach":"#F9D9C8","lavender":"#DDD0EC",
-      },
-      fontFamily: { "caslon":["Libre Caslon Text","Georgia","serif"], "jakarta":["Plus Jakarta Sans","sans-serif"] },
-      fontSize: {
-        "hero":["76px",{lineHeight:"1.05",letterSpacing:"-0.02em",fontWeight:"700"}],
-        "hero-mob":["42px",{lineHeight:"1.1",fontWeight:"700"}],
-        "h2":["50px",{lineHeight:"1.2",fontWeight:"300"}],
-        "h2-mob":["32px",{lineHeight:"1.2",fontWeight:"300"}],
-        "body-lg":["16px",{lineHeight:"1.8",fontWeight:"300"}],
-        "body":["14px",{lineHeight:"1.8",fontWeight:"300"}],
-        "label":["11px",{lineHeight:"1",letterSpacing:"0.15em",fontWeight:"500"}],
-        "micro":["9px",{lineHeight:"1",letterSpacing:"0.2em",fontWeight:"500"}],
-      },
-    }
-  }
-}
-</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<!-- Fonts: load async, no render blocking -->
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500&display=swap"/>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500&display=swap" media="print" onload="this.media='all'" fetchpriority="low"/>
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500&display=swap"/></noscript>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,300,0,0&display=swap" media="print" onload="this.media='all'" fetchpriority="low"/>
+
 <style>
+
+/* ============================
+   LUAPP — CSS Puro sin CDN
+   ============================ */
+
+/* Reset */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;background:#fff8f1;color:#1e1b17;overflow-x:hidden;line-height:1.6}
+img{max-width:100%;height:auto;display:block}
+button,input{font-family:inherit}
+a{text-decoration:none}
+
+/* Fonts */
+.font-caslon{font-family:'Libre Caslon Text',Georgia,serif!important}
+.font-jakarta{font-family:'Plus Jakarta Sans',system-ui,sans-serif!important}
+.italic{font-style:italic}
+.not-italic{font-style:normal}
+
+/* Brand */
+.grad{background:linear-gradient(135deg,#af2245 0%,#d03d5c 60%,#f07855 100%)!important}
+.grad-text{background:linear-gradient(135deg,#af2245,#f07855);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.glass{backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+
+/* Layout */
+.block{display:block}.inline{display:inline}.flex{display:flex}.grid{display:grid}.hidden{display:none}
+.flex-1{flex:1 1 0%}.flex-col{flex-direction:column}.flex-row{flex-direction:row}
+.flex-wrap{flex-wrap:wrap}.flex-shrink-0{flex-shrink:0}
+.items-center{align-items:center}.items-end{align-items:flex-end}.items-start{align-items:flex-start}
+.justify-center{justify-content:center}.justify-between{justify-content:space-between}.justify-end{justify-content:flex-end}
+.self-end{align-self:flex-end}.self-start{align-self:flex-start}
+.whitespace-nowrap{white-space:nowrap}
+.overflow-hidden{overflow:hidden}.overflow-auto{overflow:auto}
+
+/* Position */
+.relative{position:relative}.absolute{position:absolute}.fixed{position:fixed}.sticky{position:sticky}
+.inset-0{inset:0}.top-0{top:0}.bottom-0{bottom:0}.left-0{left:0}.right-0{right:0}
+.top-3{top:.75rem}.top-4{top:1rem}.bottom-4{bottom:1rem}.left-4{left:1rem}.right-3{right:.75rem}
+.top-1\/2{top:50%}.-top-3{top:-.75rem}.-top-4{top:-1rem}
+.left-1\/2{left:50%}.-translate-x-1\/2{transform:translateX(-50%)}
+.-translate-y-1\/2{transform:translateY(-50%)}
+.translate-x-2{transform:translateX(.5rem)}.-translate-x-2{transform:translateX(-.5rem)}
+.z-10{z-index:10}.z-20{z-index:20}.z-50{z-index:50}
+
+/* Sizing */
+.w-full{width:100%}.w-1\/2{width:50%}.h-full{height:100%}.min-h-screen{min-height:100vh}
+.w-1{width:.25rem}.h-1{height:.25rem}.w-1\.5{width:.375rem}.h-1\.5{height:.375rem}
+.w-2{width:.5rem}.h-2{height:.5rem}.w-5{width:1.25rem}.h-5{height:1.25rem}
+.w-6{width:1.5rem}.h-6{height:1.5rem}.w-7{width:1.75rem}.h-7{height:1.75rem}
+.w-8{width:2rem}.h-8{height:2rem}.w-9{width:2.25rem}.h-9{height:2.25rem}
+.w-10{width:2.5rem}.h-10{height:2.5rem}.w-12{width:3rem}.h-12{height:3rem}
+.w-14{width:3.5rem}.h-14{height:3.5rem}.w-16{width:4rem}.h-16{height:4rem}
+.w-20{width:5rem}.h-20{height:5rem}
+.w-52{width:13rem}.w-56{width:14rem}.w-60{width:15rem}.w-64{width:16rem}
+.h-11{height:2.75rem}.h-14{height:3.5rem}
+.max-w-sm{max-width:24rem}.max-w-md{max-width:28rem}.max-w-lg{max-width:32rem}
+.max-w-xl{max-width:36rem}.max-w-2xl{max-width:42rem}.max-w-3xl{max-width:48rem}
+.max-w-5xl{max-width:64rem}.max-w-6xl{max-width:72rem}.max-w-7xl{max-width:80rem}
+.mx-auto{margin-left:auto;margin-right:auto}
+
+/* Spacing - padding */
+.p-2{padding:.5rem}.p-3{padding:.75rem}.p-4{padding:1rem}.p-5{padding:1.25rem}
+.p-6{padding:1.5rem}.p-7{padding:1.75rem}.p-8{padding:2rem}.p-10{padding:2.5rem}
+.p-12{padding:3rem}.p-14{padding:3.5rem}
+.px-2{padding-left:.5rem;padding-right:.5rem}.px-3{padding-left:.75rem;padding-right:.75rem}
+.px-4{padding-left:1rem;padding-right:1rem}.px-5{padding-left:1.25rem;padding-right:1.25rem}
+.px-6{padding-left:1.5rem;padding-right:1.5rem}.px-7{padding-left:1.75rem;padding-right:1.75rem}
+.px-8{padding-left:2rem;padding-right:2rem}.px-9{padding-left:2.25rem;padding-right:2.25rem}
+.px-10{padding-left:2.5rem;padding-right:2.5rem}
+.py-1{padding-top:.25rem;padding-bottom:.25rem}.py-1\.5{padding-top:.375rem;padding-bottom:.375rem}
+.py-2{padding-top:.5rem;padding-bottom:.25rem}.py-2\.5{padding-top:.625rem;padding-bottom:.625rem}
+.py-3{padding-top:.75rem;padding-bottom:.75rem}.py-3\.5{padding-top:.875rem;padding-bottom:.875rem}
+.py-4{padding-top:1rem;padding-bottom:1rem}.py-5{padding-top:1.25rem;padding-bottom:1.25rem}
+.py-6{padding-top:1.5rem;padding-bottom:1.5rem}.py-8{padding-top:2rem;padding-bottom:2rem}
+.py-10{padding-top:2.5rem;padding-bottom:2.5rem}.py-12{padding-top:3rem;padding-bottom:3rem}
+.py-14{padding-top:3.5rem;padding-bottom:3.5rem}.py-16{padding-top:4rem;padding-bottom:4rem}
+.py-20{padding-top:5rem;padding-bottom:5rem}.py-24{padding-top:6rem;padding-bottom:6rem}
+.pt-8{padding-top:2rem}.pt-16{padding-top:4rem}.pt-20{padding-top:5rem}
+.pb-5{padding-bottom:1.25rem}.pb-7{padding-bottom:1.75rem}.pb-8{padding-bottom:2rem}
+.pl-0{padding-left:0}.pr-0{padding-right:0}
+
+/* Spacing - margin */
+.m-0{margin:0}.mt-2{margin-top:.5rem}.mt-4{margin-top:1rem}.mt-6{margin-top:1.5rem}
+.mt-8{margin-top:2rem}.mt-10{margin-top:2.5rem}.mt-12{margin-top:3rem}.mt-14{margin-top:3.5rem}
+.mb-1{margin-bottom:.25rem}.mb-2{margin-bottom:.5rem}.mb-3{margin-bottom:.75rem}
+.mb-4{margin-bottom:1rem}.mb-5{margin-bottom:1.25rem}.mb-6{margin-bottom:1.5rem}
+.mb-7{margin-bottom:1.75rem}.mb-8{margin-bottom:2rem}.mb-10{margin-bottom:2.5rem}
+.mb-12{margin-bottom:3rem}.mb-14{margin-bottom:3.5rem}.mb-16{margin-bottom:4rem}
+.ml-auto{margin-left:auto}.-space-x-2>*+*{margin-left:-.5rem}
+
+/* Gap */
+.gap-0\.5{gap:.125rem}.gap-1{gap:.25rem}.gap-1\.5{gap:.375rem}.gap-2{gap:.5rem}
+.gap-3{gap:.75rem}.gap-4{gap:1rem}.gap-5{gap:1.25rem}.gap-6{gap:1.5rem}
+.gap-7{gap:1.75rem}.gap-8{gap:2rem}.gap-10{gap:2.5rem}.gap-12{gap:3rem}
+
+/* Space between */
+.space-y-3>*+*{margin-top:.75rem}.space-y-4>*+*{margin-top:1rem}
+
+/* Grid */
+.grid-cols-1{grid-template-columns:repeat(1,minmax(0,1fr))}
+.grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.col-span-2{grid-column:span 2/span 2}
+.row-span-2{grid-row:span 2/span 2}
+
+/* Text */
+.text-xs{font-size:.75rem;line-height:1rem}.text-sm{font-size:.875rem;line-height:1.25rem}
+.text-base{font-size:1rem;line-height:1.5rem}.text-lg{font-size:1.125rem;line-height:1.75rem}
+.text-xl{font-size:1.25rem;line-height:1.75rem}.text-2xl{font-size:1.5rem;line-height:2rem}
+.text-3xl{font-size:1.875rem;line-height:2.25rem}.text-4xl{font-size:2.25rem;line-height:2.5rem}
+.text-5xl{font-size:3rem;line-height:1}.text-6xl{font-size:3.75rem;line-height:1}
+.text-7xl{font-size:4.5rem;line-height:1}.text-8xl{font-size:6rem;line-height:1}
+.text-9xl{font-size:8rem;line-height:1}
+.text-center{text-align:center}.text-left{text-align:left}.text-right{text-align:right}
+.font-light{font-weight:300}.font-normal{font-weight:400}.font-medium{font-weight:500}
+.font-semibold{font-weight:600}.font-bold{font-weight:700}
+.leading-none{line-height:1}.leading-tight{line-height:1.25}.leading-relaxed{line-height:1.625}
+.tracking-wide{letter-spacing:.025em}.tracking-wider{letter-spacing:.05em}.tracking-widest{letter-spacing:.1em}
+.uppercase{text-transform:uppercase}.lowercase{text-transform:lowercase}
+.select-none{user-select:none}.truncate{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+/* Specific hero font size */
+.text-hero{font-size:clamp(42px,6vw,76px);font-weight:700;line-height:1.05;letter-spacing:-0.02em}
+.text-hero-mob{font-size:clamp(40px,8vw,52px);font-weight:700;line-height:1.1}
+.text-h2{font-size:clamp(32px,4vw,50px);font-weight:300;line-height:1.2}
+.text-h2-mob{font-size:clamp(28px,5vw,38px);font-weight:300;line-height:1.2}
+.text-body-lg{font-size:16px;line-height:1.8;font-weight:300}
+.text-body{font-size:14px;line-height:1.8;font-weight:300}
+.text-label{font-size:11px;line-height:1;letter-spacing:.15em;font-weight:500}
+.text-micro{font-size:9px;line-height:1;letter-spacing:.2em;font-weight:500}
+
+/* Colors — text */
+.text-white{color:#ffffff}.text-black{color:#000000}
+.text-primary{color:#af2245}.text-on-surface{color:#1e1b17}
+.text-on-surface-variant{color:#594143}.text-on-primary{color:#ffffff}
+.text-on-primary-container{color:#fffbff}
+.text-inverse-primary{color:#ffb2ba}.text-outline{color:#8c7072}
+.text-text-primary{color:#2A1840}.text-text-muted{color:#7A6080}
+.text-emerald-500{color:#10b981}.text-red-500{color:#ef4444}
+.text-gray-400{color:#9ca3af}.text-gray-500{color:#6b7280}
+.text-gray-800{color:#1f2937}
+
+/* Colors — background */
+.bg-white{background-color:#ffffff}.bg-black{background-color:#000000}
+.bg-cream{background-color:#fff8f1}.bg-primary{background-color:#af2245}
+.bg-surface{background-color:#fff8f1}.bg-surface-container-low{background-color:#f9f3eb}
+.bg-surface-container{background-color:#f4ede5}.bg-surface-container-high{background-color:#eee7df}
+.bg-surface-container-highest{background-color:#e8e1da}
+.bg-inverse-surface{background-color:#33302b}.bg-rose{background-color:#F2C4CE}
+.bg-on-surface{background-color:#1e1b17}
+.bg-transparent{background-color:transparent}
+.bg-gray-200{background-color:#e5e7eb}
+
+/* Border */
+.border{border-width:1px;border-style:solid}.border-0{border-width:0}
+.border-2{border-width:2px}.border-4{border-width:4px}
+.border-t{border-top-width:1px;border-top-style:solid}
+.border-b{border-bottom-width:1px;border-bottom-style:solid}
+.border-none{border:none}
+.border-white{border-color:#ffffff}.border-primary{border-color:#af2245}
+.border-outline{border-color:#8c7072}.border-outline-variant{border-color:#e0bec1}
+.border-gray-200{border-color:#e5e7eb}.border-rose{border-color:#F2C4CE}
+
+/* Border radius */
+.rounded{border-radius:.25rem}.rounded-md{border-radius:.375rem}
+.rounded-lg{border-radius:.5rem}.rounded-xl{border-radius:.75rem}
+.rounded-2xl{border-radius:1rem}.rounded-3xl{border-radius:1.5rem}
+.rounded-full{border-radius:9999px}
+.rounded-t-\[26px\]{border-radius:26px 26px 0 0}
+.rounded-2xl{border-radius:16px}
+.rounded-\[22px\]{border-radius:22px}.rounded-\[32px\]{border-radius:32px}
+.rounded-tl-sm{border-top-left-radius:.125rem}.rounded-tr-sm{border-top-right-radius:.125rem}
+
+/* Shadow */
+.shadow{box-shadow:0 1px 3px rgba(0,0,0,.1)}.shadow-sm{box-shadow:0 1px 2px rgba(0,0,0,.05)}
+.shadow-md{box-shadow:0 4px 6px rgba(0,0,0,.1)}.shadow-lg{box-shadow:0 10px 15px rgba(0,0,0,.1)}
+.shadow-xl{box-shadow:0 20px 25px rgba(0,0,0,.1)}.shadow-2xl{box-shadow:0 25px 50px rgba(0,0,0,.25)}
+
+/* Opacity */
+.opacity-0{opacity:0}.opacity-40{opacity:.4}.opacity-50{opacity:.5}
+.opacity-70{opacity:.7}.opacity-80{opacity:.8}.opacity-90{opacity:.9}
+
+/* Transforms */
+.scale-105{transform:scale(1.05)}
+.rotate-6{transform:rotate(6deg)}.-rotate-6{transform:rotate(-6deg)}
+
+/* Transitions */
+.transition{transition:all .15s ease}.transition-all{transition:all .3s ease}
+.transition-colors{transition:color .25s,background-color .25s,border-color .25s}
+.duration-300{transition-duration:.3s}
+
+/* Cursor */
+.cursor-pointer{cursor:pointer}
+
+/* Blur */
+.blur-3xl{filter:blur(64px)}
+
+/* Will-change */
+.will-change-transform{will-change:transform}
+
+/* Pointer events */
+.pointer-events-none{pointer-events:none}
+
+/* Animations */
+@keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+
+.marquee{animation:marquee 35s linear infinite;will-change:transform}
+.float{animation:float 6s ease-in-out infinite}
+.float2{animation:float 8s ease-in-out 1.5s infinite}
+.animate-pulse{animation:pulse 2s ease-in-out infinite}
+.animate-fade-up{animation:fadeUp .6s ease both}
+
+/* Details/FAQ */
+details summary::-webkit-details-marker{display:none}
+.faq-arrow{transition:transform .3s}
+details[open] .faq-arrow{transform:rotate(180deg)}
+
+/* Phone notch */
+.phone-notch{height:20px;background:#1e1b17;display:flex;align-items:center;justify-content:center}
+.phone-notch-bar{width:56px;height:4px;background:rgba(255,255,255,.2);border-radius:10px}
+
+/* Card lift */
+.lift{transition:transform .3s ease,box-shadow .3s ease}
+.lift:hover{transform:translateY(-5px);box-shadow:0 20px 48px rgba(175,34,69,.14)}
+
+/* Material icons */
+.material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 300,'GRAD' 0,'opsz' 24;font-size:18px;line-height:1}
+
+/* Specific font sizes for icons */
+.text-4xl .material-symbols-outlined,.material-symbols-outlined.text-4xl{font-size:2.25rem}
+span.text-4xl{font-size:2.25rem}
+
+/* Nav */
+#nav{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(255,248,241,.95);border-bottom:1px solid rgba(224,190,193,.3);transition:box-shadow .3s}
+
+/* Scrollbar */
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:#e0bec1;border-radius:4px}
+
+/* Performance */
+img{content-visibility:auto}
+.lazy-section{content-visibility:auto;contain-intrinsic-size:0 400px}
+@media(prefers-reduced-motion:reduce){.marquee,.float,.float2{animation:none}}
+
+/* ── RESPONSIVE ── */
+@media(min-width:768px){
+  .md\:hidden{display:none}
+  .md\:flex{display:flex}
+  .md\:block{display:block}
+  .md\:grid{display:grid}
+  .md\:grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .md\:grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .md\:grid-cols-4{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .md\:col-span-2{grid-column:span 2/span 2}
+  .md\:row-span-2{grid-row:span 2/span 2}
+  .md\:flex-row{flex-direction:row}
+  .md\:text-hero{font-size:clamp(52px,7vw,80px);font-weight:700;line-height:1.05;letter-spacing:-0.02em}
+  .md\:text-h2{font-size:clamp(38px,4.5vw,54px);font-weight:300;line-height:1.2}
+  .md\:text-h2-mob{font-size:clamp(32px,4vw,44px)}
+  .md\:flex-1{flex:1 1 0%}
+  .md\:p-14{padding:3.5rem}
+  .md\:text-3xl{font-size:1.875rem}
+  .md\:py-0{padding-top:0;padding-bottom:0}
+  .md\:flex-row{flex-direction:row}
+  .md\:items-center{align-items:center}
+  .md\:gap-10{gap:2.5rem}
+  .md\:gap-12{gap:3rem}
+  .md\:h-\[640px\]{height:640px}
+}
+
+@media(max-width:767px){
+  .md\:hidden{display:none!important}
+  .hidden.md\:flex{display:none}
+  #mob-menu.hidden{display:none}
+  #mob-menu:not(.hidden){display:flex;flex-direction:column}
+}
+
+/* Specific layout classes */
+.px-\[5\%\]{padding-left:5%;padding-right:5%}
+.max-w-7xl{max-width:80rem}.max-w-6xl{max-width:72rem}.max-w-5xl{max-width:64rem}
+.max-w-3xl{max-width:48rem}.max-w-2xl{max-width:42rem}.max-w-xl{max-width:36rem}
+
+/* Mobile menu */
+#mob-menu{flex-direction:column;gap:1rem;background:rgba(255,248,241,.97);padding:20px 5%;border-top:1px solid rgba(224,190,193,.2)}
+
+/* Flex height for phones */
+.h-\[480px\]{height:480px}.h-\[500px\]{height:500px}
+.h-\[380px\]{height:380px}.h-\[400px\]{height:400px}
+.h-\[560px\]{height:560px}.h-\[600px\]{height:600px}.h-\[640px\]{height:640px}
+
+/* Misc */
+.list-none{list-style:none}
+.text-\[5\%\]{padding:5%}
+.border-\[6px\]{border-width:6px;border-style:solid}
+.drop-shadow-sm{filter:drop-shadow(0 1px 1px rgba(0,0,0,.05))}
+
+/* === Original styles below === */
+
+  /* CRITICAL CSS — Above the fold */
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth;font-size:16px}
+  body{font-family:'Plus Jakarta Sans',sans-serif;background:#fff8f1;overflow-x:hidden;color:#1e1b17}
+  .font-caslon{font-family:'Libre Caslon Text',Georgia,serif}
+  .grad{background:linear-gradient(135deg,#af2245 0%,#d03d5c 60%,#f07855 100%)}
+  .grad-text{background:linear-gradient(135deg,#af2245,#f07855);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+  .glass{backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+  /* Nav critical */
+  #nav{position:fixed;top:0;width:100%;z-index:50;background:rgba(255,248,241,.95);border-bottom:1px solid rgba(224,190,193,.3);transition:all .3s}
+  /* Hero critical */
+  .hero-h1{font-family:'Libre Caslon Text',Georgia,serif;font-size:clamp(42px,6vw,76px);font-weight:700;line-height:1.05;letter-spacing:-0.02em;color:#2A1840}
+  /* Button critical */
+  .btn-grad{background:linear-gradient(135deg,#af2245,#f07855);color:white;border-radius:9999px;box-shadow:0 8px 24px rgba(175,34,69,.3)}
+
   body{background:#fff8f1;overflow-x:hidden}
   .grad{background:linear-gradient(135deg,#af2245 0%,#d03d5c 60%,#f07855 100%)}
   .grad-text{background:linear-gradient(135deg,#af2245,#f07855);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
@@ -47,8 +350,19 @@ tailwind.config = {
   .lift:hover{transform:translateY(-5px);box-shadow:0 20px 48px rgba(175,34,69,.14)}
   .material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 300,'GRAD' 0,'opsz' 24}
   @keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+  @media(prefers-reduced-motion:reduce){.marquee{animation:none}}
+  @media(max-width:768px){.marquee{animation-duration:50s}}
   .marquee{animation:marquee 35s linear infinite}
   @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+  /* Performance: lazy render off-screen sections */
+  .lazy-section{content-visibility:auto;contain-intrinsic-size:0 500px}
+  /* Optimize images */
+  img{max-width:100%;height:auto}
+  /* Reduce repaints */
+  .marquee{will-change:transform}
+  .float,.float2{will-change:transform}
+  /* Font display */
+  @font-face{font-display:swap}
   .float{animation:float 6s ease-in-out infinite}
   .float2{animation:float 8s ease-in-out 1.5s infinite}
   details summary::-webkit-details-marker{display:none}
@@ -57,13 +371,15 @@ tailwind.config = {
   .phone-notch{height:20px;background:#1e1b17;display:flex;align-items:center;justify-content:center}
   .phone-notch-bar{width:56px;height:4px;background:rgba(255,255,255,.2);border-radius:10px}
 </style>
+  <!-- Resource hints -->
+  <link rel="preload" href="images/logo/logo-color.png" as="image" fetchpriority="high"/>
 </head>
 <body class="font-jakarta text-on-surface">
 
 <!-- NAV -->
 <header id="nav" class="fixed top-0 w-full glass z-50 border-b border-outline-variant/30 transition-all duration-300" style="background:rgba(255,248,241,.95)">
   <div class="max-w-7xl mx-auto px-[5%] py-4 flex items-center justify-between">
-    <a href="/"><img src="images/logo/logo-color.png" alt="LUAPP" class="h-14 w-auto drop-shadow-sm"/></a>
+    <a href="/"><img src="images/logo/logo-color.webp" onerror="this.src='images/logo/logo-color.png'" alt="LUAPP" class="h-14 w-auto drop-shadow-sm" fetchpriority="high" width="180" height="56" loading="eager"/></a>
     <nav class="hidden md:flex items-center gap-8">
       <a href="#funciona" class="text-body text-on-surface-variant hover:text-primary transition-colors">Cómo funciona</a>
       <a href="#privacidad" class="text-body text-on-surface-variant hover:text-primary transition-colors">Privacidad</a>
@@ -147,7 +463,7 @@ tailwind.config = {
           <div class="rounded-full px-2 py-0.5 text-micro tracking-wider border" style="background:rgba(242,196,206,.25);border-color:rgba(242,196,206,.6);color:#af2245">🔥 50 créditos</div>
         </div>
         <div class="flex-1 mx-2.5 mb-2.5 rounded-2xl overflow-hidden relative">
-          <img src="images/app/mujer1.jpg" alt="Valentina" class="w-full h-full object-cover object-top absolute inset-0"/>
+          <img loading="lazy" decoding="async" width="208" height="280" src="images/app/mujer1.webp" alt="Valentina" class="w-full h-full object-cover object-top absolute inset-0"/>
           <div class="absolute inset-0" style="background:linear-gradient(to top,rgba(26,16,51,.9) 0%,transparent 55%)"></div>
           <div class="absolute bottom-0 left-0 right-0 p-3">
             <div class="flex gap-1.5 flex-wrap mb-2">
@@ -262,48 +578,49 @@ tailwind.config = {
       <!-- Set 1 -->
       <!-- Valentina -->
       <div class="flex-shrink-0 w-52 rounded-2xl overflow-hidden relative" style="height:280px">
-        <img src="images/app/mujer1.jpg" alt="Valentina" class="w-full h-full object-cover object-top"/>
+        <img loading="lazy" decoding="async" width="208" height="280" src="images/app/mujer1.webp" alt="Valentina" class="w-full h-full object-cover object-top"/>
         <div class="absolute inset-0" style="background:linear-gradient(to top,rgba(26,16,51,.85) 0%,transparent 55%)"></div>
         <div class="absolute top-3 right-3 rounded-full px-2.5 py-1 text-micro text-white tracking-wider" style="background:rgba(175,34,69,.9)">● EN LÍNEA</div>
         <div class="absolute bottom-4 left-4"><div class="font-caslon text-lg text-white font-bold">Valentina, 34</div><div class="text-micro tracking-wider" style="color:rgba(255,255,255,.5)">BOGOTÁ · 1.2 KM</div></div>
       </div>
       <!-- Carlos -->
       <div class="flex-shrink-0 w-52 rounded-2xl overflow-hidden relative" style="height:280px">
-        <img src="images/app/hombre1.jpg" alt="Carlos" class="w-full h-full object-cover object-top"/>
+        <img loading="lazy" decoding="async" width="208" height="280" src="images/app/hombre1.webp" alt="Carlos" class="w-full h-full object-cover object-top"/>
         <div class="absolute inset-0" style="background:linear-gradient(to top,rgba(26,16,51,.85) 0%,transparent 55%)"></div>
         <div class="absolute bottom-4 left-4"><div class="font-caslon text-lg text-white font-bold">Carlos, 38</div><div class="text-micro tracking-wider" style="color:rgba(255,255,255,.5)">CDMX · 3.5 KM</div></div>
       </div>
       <!-- Isabela -->
       <div class="flex-shrink-0 w-52 rounded-2xl overflow-hidden relative" style="height:280px">
-        <img src="images/app/mujer2.jpg" alt="Isabela" class="w-full h-full object-cover object-top"/>
+        <img loading="lazy" decoding="async" width="208" height="280" src="images/app/mujer2.webp" alt="Isabela" class="w-full h-full object-cover object-top"/>
         <div class="absolute inset-0" style="background:linear-gradient(to top,rgba(26,16,51,.85) 0%,transparent 55%)"></div>
         <div class="absolute top-3 right-3 rounded-full px-2.5 py-1 text-micro text-white tracking-wider" style="background:rgba(175,34,69,.9)">● EN LÍNEA</div>
         <div class="absolute bottom-4 left-4"><div class="font-caslon text-lg text-white font-bold">Isabela, 31</div><div class="text-micro tracking-wider" style="color:rgba(255,255,255,.5)">MEDELLÍN · 2.1 KM</div></div>
       </div>
       <!-- Miguel -->
       <div class="flex-shrink-0 w-52 rounded-2xl overflow-hidden relative" style="height:280px">
-        <img src="images/app/hombre2.jpg" alt="Miguel" class="w-full h-full object-cover object-top"/>
+        <img loading="lazy" decoding="async" width="208" height="280" src="images/app/hombre2.webp" alt="Miguel" class="w-full h-full object-cover object-top"/>
         <div class="absolute inset-0" style="background:linear-gradient(to top,rgba(26,16,51,.85) 0%,transparent 55%)"></div>
         <div class="absolute bottom-4 left-4"><div class="font-caslon text-lg text-white font-bold">Miguel, 41</div><div class="text-micro tracking-wider" style="color:rgba(255,255,255,.5)">BS. AIRES · 5 KM</div></div>
       </div>
       <!-- Camila -->
       <div class="flex-shrink-0 w-52 rounded-2xl overflow-hidden relative" style="height:280px">
-        <img src="images/app/mujer3.jpg" alt="Camila" class="w-full h-full object-cover object-top"/>
+        <img loading="lazy" decoding="async" width="208" height="280" src="images/app/mujer3.webp" alt="Camila" class="w-full h-full object-cover object-top"/>
         <div class="absolute inset-0" style="background:linear-gradient(to top,rgba(26,16,51,.85) 0%,transparent 55%)"></div>
         <div class="absolute top-3 right-3 rounded-full px-2.5 py-1 text-micro text-white tracking-wider" style="background:rgba(175,34,69,.9)">● EN LÍNEA</div>
         <div class="absolute bottom-4 left-4"><div class="font-caslon text-lg text-white font-bold">Camila, 36</div><div class="text-micro tracking-wider" style="color:rgba(255,255,255,.5)">SANTIAGO · 0.8 KM</div></div>
       </div>
       <!-- Duplicate set con más fotos -->
-      <div class="flex-shrink-0 w-52 rounded-2xl overflow-hidden relative" style="height:280px"><img src="images/app/mujer4.jpg" alt="Andrea" class="w-full h-full object-cover object-top"/><div class="absolute inset-0" style="background:linear-gradient(to top,rgba(26,16,51,.85) 0%,transparent 55%)"></div><div class="absolute top-3 right-3 rounded-full px-2.5 py-1 text-micro text-white tracking-wider" style="background:rgba(175,34,69,.9)">● EN LÍNEA</div><div class="absolute bottom-4 left-4"><div class="font-caslon text-lg text-white font-bold">Andrea, 33</div><div class="text-micro tracking-wider" style="color:rgba(255,255,255,.5)">LIMA · 2.4 KM</div></div></div>
-      <div class="flex-shrink-0 w-52 rounded-2xl overflow-hidden relative" style="height:280px"><img src="images/app/hombre3.jpg" alt="Rodrigo" class="w-full h-full object-cover object-top"/><div class="absolute inset-0" style="background:linear-gradient(to top,rgba(26,16,51,.85) 0%,transparent 55%)"></div><div class="absolute bottom-4 left-4"><div class="font-caslon text-lg text-white font-bold">Rodrigo, 42</div><div class="text-micro tracking-wider" style="color:rgba(255,255,255,.5)">SANTIAGO · 1.8 KM</div></div></div>
-      <div class="flex-shrink-0 w-52 rounded-2xl overflow-hidden relative" style="height:280px"><img src="images/app/mujer5.jpg" alt="Luciana" class="w-full h-full object-cover object-top"/><div class="absolute inset-0" style="background:linear-gradient(to top,rgba(26,16,51,.85) 0%,transparent 55%)"></div><div class="absolute top-3 right-3 rounded-full px-2.5 py-1 text-micro text-white tracking-wider" style="background:rgba(175,34,69,.9)">● EN LÍNEA</div><div class="absolute bottom-4 left-4"><div class="font-caslon text-lg text-white font-bold">Luciana, 29</div><div class="text-micro tracking-wider" style="color:rgba(255,255,255,.5)">BUENOS AIRES · 3.1 KM</div></div></div>
-      <div class="flex-shrink-0 w-52 rounded-2xl overflow-hidden relative" style="height:280px"><img src="images/app/hombre4.jpg" alt="Diego" class="w-full h-full object-cover object-top"/><div class="absolute inset-0" style="background:linear-gradient(to top,rgba(26,16,51,.85) 0%,transparent 55%)"></div><div class="absolute bottom-4 left-4"><div class="font-caslon text-lg text-white font-bold">Diego, 37</div><div class="text-micro tracking-wider" style="color:rgba(255,255,255,.5)">BOGOTÁ · 0.9 KM</div></div></div>
-      <div class="flex-shrink-0 w-52 rounded-2xl overflow-hidden relative" style="height:280px"><img src="images/app/mujer6.jpg" alt="Mariana" class="w-full h-full object-cover object-top"/><div class="absolute inset-0" style="background:linear-gradient(to top,rgba(26,16,51,.85) 0%,transparent 55%)"></div><div class="absolute top-3 right-3 rounded-full px-2.5 py-1 text-micro text-white tracking-wider" style="background:rgba(175,34,69,.9)">● EN LÍNEA</div><div class="absolute bottom-4 left-4"><div class="font-caslon text-lg text-white font-bold">Mariana, 35</div><div class="text-micro tracking-wider" style="color:rgba(255,255,255,.5)">CDMX · 4.2 KM</div></div></div>
+      <div class="flex-shrink-0 w-52 rounded-2xl overflow-hidden relative" style="height:280px"><img loading="lazy" decoding="async" width="208" height="280" src="images/app/mujer4.webp" alt="Andrea" class="w-full h-full object-cover object-top"/><div class="absolute inset-0" style="background:linear-gradient(to top,rgba(26,16,51,.85) 0%,transparent 55%)"></div><div class="absolute top-3 right-3 rounded-full px-2.5 py-1 text-micro text-white tracking-wider" style="background:rgba(175,34,69,.9)">● EN LÍNEA</div><div class="absolute bottom-4 left-4"><div class="font-caslon text-lg text-white font-bold">Andrea, 33</div><div class="text-micro tracking-wider" style="color:rgba(255,255,255,.5)">LIMA · 2.4 KM</div></div></div>
+      <div class="flex-shrink-0 w-52 rounded-2xl overflow-hidden relative" style="height:280px"><img loading="lazy" decoding="async" width="208" height="280" src="images/app/hombre3.webp" alt="Rodrigo" class="w-full h-full object-cover object-top"/><div class="absolute inset-0" style="background:linear-gradient(to top,rgba(26,16,51,.85) 0%,transparent 55%)"></div><div class="absolute bottom-4 left-4"><div class="font-caslon text-lg text-white font-bold">Rodrigo, 42</div><div class="text-micro tracking-wider" style="color:rgba(255,255,255,.5)">SANTIAGO · 1.8 KM</div></div></div>
+      <div class="flex-shrink-0 w-52 rounded-2xl overflow-hidden relative" style="height:280px"><img loading="lazy" decoding="async" width="208" height="280" src="images/app/mujer5.webp" alt="Luciana" class="w-full h-full object-cover object-top"/><div class="absolute inset-0" style="background:linear-gradient(to top,rgba(26,16,51,.85) 0%,transparent 55%)"></div><div class="absolute top-3 right-3 rounded-full px-2.5 py-1 text-micro text-white tracking-wider" style="background:rgba(175,34,69,.9)">● EN LÍNEA</div><div class="absolute bottom-4 left-4"><div class="font-caslon text-lg text-white font-bold">Luciana, 29</div><div class="text-micro tracking-wider" style="color:rgba(255,255,255,.5)">BUENOS AIRES · 3.1 KM</div></div></div>
+      <div class="flex-shrink-0 w-52 rounded-2xl overflow-hidden relative" style="height:280px"><img loading="lazy" decoding="async" width="208" height="280" src="images/app/hombre4.webp" alt="Diego" class="w-full h-full object-cover object-top"/><div class="absolute inset-0" style="background:linear-gradient(to top,rgba(26,16,51,.85) 0%,transparent 55%)"></div><div class="absolute bottom-4 left-4"><div class="font-caslon text-lg text-white font-bold">Diego, 37</div><div class="text-micro tracking-wider" style="color:rgba(255,255,255,.5)">BOGOTÁ · 0.9 KM</div></div></div>
+      <div class="flex-shrink-0 w-52 rounded-2xl overflow-hidden relative" style="height:280px"><img loading="lazy" decoding="async" width="208" height="280" src="images/app/mujer6.webp" alt="Mariana" class="w-full h-full object-cover object-top"/><div class="absolute inset-0" style="background:linear-gradient(to top,rgba(26,16,51,.85) 0%,transparent 55%)"></div><div class="absolute top-3 right-3 rounded-full px-2.5 py-1 text-micro text-white tracking-wider" style="background:rgba(175,34,69,.9)">● EN LÍNEA</div><div class="absolute bottom-4 left-4"><div class="font-caslon text-lg text-white font-bold">Mariana, 35</div><div class="text-micro tracking-wider" style="color:rgba(255,255,255,.5)">CDMX · 4.2 KM</div></div></div>
     </div>
   </div>
 </section>
 
 <!-- STATS -->
+<!-- content-visibility: auto applied via CSS -->
 <section class="grad px-[5%] py-16">
   <div class="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
     <div><div class="font-caslon text-5xl text-white mb-2" style="font-weight:300">100%</div><div class="text-label tracking-widest uppercase" style="color:rgba(255,255,255,.6)">Anónimo</div></div>
@@ -482,7 +799,7 @@ tailwind.config = {
 <footer class="px-[5%] py-20" style="background:#e8e1da">
   <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10 mb-12">
     <div>
-      <img src="images/logo/logo-color.png" alt="LUAPP" class="h-14 w-auto mb-4" style="opacity:.8"/>
+      <img src="images/logo/logo-color.webp" onerror="this.src='images/logo/logo-color.png'" alt="LUAPP" class="h-14 w-auto mb-4" style="opacity:.8"/>
       <p class="text-body text-on-surface-variant">La app de encuentros discretos para personas casadas en Latinoamérica.</p>
     </div>
     <div>
@@ -515,6 +832,17 @@ tailwind.config = {
 </footer>
 
 <script>
+  // Pause marquee when not visible (saves CPU)
+  const marquee = document.querySelector('.marquee')
+  if (marquee && 'IntersectionObserver' in window) {
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        marquee.style.animationPlayState = e.isIntersecting ? 'running' : 'paused'
+      })
+    })
+    obs.observe(marquee)
+  }
+
   window.addEventListener('scroll',()=>{
     const n=document.getElementById('nav');
     n.style.boxShadow=window.scrollY>20?'0 4px 24px rgba(175,34,69,.08)':'none';
@@ -524,5 +852,7 @@ tailwind.config = {
   });
   document.querySelectorAll('#mob-menu a').forEach(a=>a.addEventListener('click',()=>document.getElementById('mob-menu').classList.add('hidden')));
 </script>
+  <!-- Tailwind carga después del contenido crítico -->
+  
 </body>
 </html>
