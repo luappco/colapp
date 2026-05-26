@@ -5,24 +5,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <meta http-equiv="x-dns-prefetch-control" content="on"/>
 <title>LUAPP — App de Encuentros Discretos para Personas Casadas en LATAM</title>
-<style>
-  /* System font fallbacks while web fonts load */
-  body{font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
-  .font-caslon{font-family:Georgia,'Times New Roman',serif}
-  .font-jakarta{font-family:system-ui,-apple-system,sans-serif}
-</style>
+
 <meta name="theme-color" content="#fff8f1"/>
+  <meta name="color-scheme" content="light"/>
   <meta name="description" content="LUAPP es la app de encuentros extraconyugales más discreta de Latinoamérica. 100% anónimo, seguro y sin rastros."/>
 <link rel="canonical" href="https://luapp.co/"/>
 <link rel="icon" type="image/png" href="favicon.png"/>
 
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<!-- Fonts: load async, no render blocking -->
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500&display=swap"/>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500&display=swap" media="print" onload="this.media='all'" fetchpriority="low"/>
-<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500&display=swap"/></noscript>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,300,0,0&display=swap" media="print" onload="this.media='all'" fetchpriority="low"/>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500&display=swap"/>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,300,0,0&display=swap"/>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,300,0,0&display=swap"/>
 
 <style>
 
@@ -351,7 +346,8 @@ img{content-visibility:auto}
   .material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 300,'GRAD' 0,'opsz' 24}
   @keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
   @media(prefers-reduced-motion:reduce){.marquee{animation:none}}
-  @media(max-width:768px){.marquee{animation-duration:50s}}
+  @media(max-width:767px){.marquee{animation:none;display:flex;overflow-x:auto;gap:.75rem;padding-bottom:.5rem}}
+  @media(max-width:767px){.marquee>div:last-child{display:none}}
   .marquee{animation:marquee 35s linear infinite}
   @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
   /* Performance: lazy render off-screen sections */
@@ -372,14 +368,15 @@ img{content-visibility:auto}
   .phone-notch-bar{width:56px;height:4px;background:rgba(255,255,255,.2);border-radius:10px}
 </style>
   <!-- Resource hints -->
-  <link rel="preload" href="images/logo/logo-color.png" as="image" fetchpriority="high"/>
+  <link rel="preload" href="images/logo/logo-color.webp" as="image" fetchpriority="high" type="image/webp"/>
+  <link rel="preload" href="images/app/mujer1.webp" as="image" fetchpriority="high" type="image/webp"/>
 </head>
 <body class="font-jakarta text-on-surface">
 
 <!-- NAV -->
 <header id="nav" class="fixed top-0 w-full glass z-50 border-b border-outline-variant/30 transition-all duration-300" style="background:rgba(255,248,241,.95)">
   <div class="max-w-7xl mx-auto px-[5%] py-4 flex items-center justify-between">
-    <a href="/"><img src="images/logo/logo-color.webp" onerror="this.src='images/logo/logo-color.png'" alt="LUAPP" class="h-14 w-auto drop-shadow-sm" fetchpriority="high" width="180" height="56" loading="eager"/></a>
+    <a href="/"><img src="images/logo/logo-color.webp" width="180" height="56" loading="eager" fetchpriority="high"  alt="LUAPP" class="h-14 w-auto drop-shadow-sm" fetchpriority="high" width="180" height="56" loading="eager"/></a>
     <nav class="hidden md:flex items-center gap-8">
       <a href="#funciona" class="text-body text-on-surface-variant hover:text-primary transition-colors">Cómo funciona</a>
       <a href="#privacidad" class="text-body text-on-surface-variant hover:text-primary transition-colors">Privacidad</a>
@@ -463,7 +460,7 @@ img{content-visibility:auto}
           <div class="rounded-full px-2 py-0.5 text-micro tracking-wider border" style="background:rgba(242,196,206,.25);border-color:rgba(242,196,206,.6);color:#af2245">🔥 50 créditos</div>
         </div>
         <div class="flex-1 mx-2.5 mb-2.5 rounded-2xl overflow-hidden relative">
-          <img loading="lazy" decoding="async" width="208" height="280" src="images/app/mujer1.webp" alt="Valentina" class="w-full h-full object-cover object-top absolute inset-0"/>
+          <img loading="eager" decoding="sync" fetchpriority="high" width="208" height="280" src="images/app/mujer1.webp" srcset="images/app/mujer1.webp 1x" sizes="(max-width:768px) 150px, 208px" alt="Valentina" class="w-full h-full object-cover object-top absolute inset-0"/>
           <div class="absolute inset-0" style="background:linear-gradient(to top,rgba(26,16,51,.9) 0%,transparent 55%)"></div>
           <div class="absolute bottom-0 left-0 right-0 p-3">
             <div class="flex gap-1.5 flex-wrap mb-2">
@@ -578,43 +575,43 @@ img{content-visibility:auto}
       <!-- Set 1 -->
       <!-- Valentina -->
       <div class="flex-shrink-0 w-52 rounded-2xl overflow-hidden relative" style="height:280px">
-        <img loading="lazy" decoding="async" width="208" height="280" src="images/app/mujer1.webp" alt="Valentina" class="w-full h-full object-cover object-top"/>
+        <img loading="eager" decoding="sync" fetchpriority="high" width="208" height="280" src="images/app/mujer1.webp" srcset="images/app/mujer1.webp 1x" sizes="(max-width:768px) 150px, 208px" alt="Valentina" class="w-full h-full object-cover object-top"/>
         <div class="absolute inset-0" style="background:linear-gradient(to top,rgba(26,16,51,.85) 0%,transparent 55%)"></div>
         <div class="absolute top-3 right-3 rounded-full px-2.5 py-1 text-micro text-white tracking-wider" style="background:rgba(175,34,69,.9)">● EN LÍNEA</div>
         <div class="absolute bottom-4 left-4"><div class="font-caslon text-lg text-white font-bold">Valentina, 34</div><div class="text-micro tracking-wider" style="color:rgba(255,255,255,.5)">BOGOTÁ · 1.2 KM</div></div>
       </div>
       <!-- Carlos -->
       <div class="flex-shrink-0 w-52 rounded-2xl overflow-hidden relative" style="height:280px">
-        <img loading="lazy" decoding="async" width="208" height="280" src="images/app/hombre1.webp" alt="Carlos" class="w-full h-full object-cover object-top"/>
+        <img loading="lazy" decoding="async" width="208" height="280" src="images/app/hombre1.webp" srcset="images/app/hombre1.webp 1x" sizes="(max-width:768px) 150px, 208px" alt="Carlos" class="w-full h-full object-cover object-top"/>
         <div class="absolute inset-0" style="background:linear-gradient(to top,rgba(26,16,51,.85) 0%,transparent 55%)"></div>
         <div class="absolute bottom-4 left-4"><div class="font-caslon text-lg text-white font-bold">Carlos, 38</div><div class="text-micro tracking-wider" style="color:rgba(255,255,255,.5)">CDMX · 3.5 KM</div></div>
       </div>
       <!-- Isabela -->
       <div class="flex-shrink-0 w-52 rounded-2xl overflow-hidden relative" style="height:280px">
-        <img loading="lazy" decoding="async" width="208" height="280" src="images/app/mujer2.webp" alt="Isabela" class="w-full h-full object-cover object-top"/>
+        <img loading="lazy" decoding="async" width="208" height="280" src="images/app/mujer2.webp" srcset="images/app/mujer2.webp 1x" sizes="(max-width:768px) 150px, 208px" alt="Isabela" class="w-full h-full object-cover object-top"/>
         <div class="absolute inset-0" style="background:linear-gradient(to top,rgba(26,16,51,.85) 0%,transparent 55%)"></div>
         <div class="absolute top-3 right-3 rounded-full px-2.5 py-1 text-micro text-white tracking-wider" style="background:rgba(175,34,69,.9)">● EN LÍNEA</div>
         <div class="absolute bottom-4 left-4"><div class="font-caslon text-lg text-white font-bold">Isabela, 31</div><div class="text-micro tracking-wider" style="color:rgba(255,255,255,.5)">MEDELLÍN · 2.1 KM</div></div>
       </div>
       <!-- Miguel -->
       <div class="flex-shrink-0 w-52 rounded-2xl overflow-hidden relative" style="height:280px">
-        <img loading="lazy" decoding="async" width="208" height="280" src="images/app/hombre2.webp" alt="Miguel" class="w-full h-full object-cover object-top"/>
+        <img loading="lazy" decoding="async" width="208" height="280" src="images/app/hombre2.webp" srcset="images/app/hombre2.webp 1x" sizes="(max-width:768px) 150px, 208px" alt="Miguel" class="w-full h-full object-cover object-top"/>
         <div class="absolute inset-0" style="background:linear-gradient(to top,rgba(26,16,51,.85) 0%,transparent 55%)"></div>
         <div class="absolute bottom-4 left-4"><div class="font-caslon text-lg text-white font-bold">Miguel, 41</div><div class="text-micro tracking-wider" style="color:rgba(255,255,255,.5)">BS. AIRES · 5 KM</div></div>
       </div>
       <!-- Camila -->
       <div class="flex-shrink-0 w-52 rounded-2xl overflow-hidden relative" style="height:280px">
-        <img loading="lazy" decoding="async" width="208" height="280" src="images/app/mujer3.webp" alt="Camila" class="w-full h-full object-cover object-top"/>
+        <img loading="lazy" decoding="async" width="208" height="280" src="images/app/mujer3.webp" srcset="images/app/mujer3.webp 1x" sizes="(max-width:768px) 150px, 208px" alt="Camila" class="w-full h-full object-cover object-top"/>
         <div class="absolute inset-0" style="background:linear-gradient(to top,rgba(26,16,51,.85) 0%,transparent 55%)"></div>
         <div class="absolute top-3 right-3 rounded-full px-2.5 py-1 text-micro text-white tracking-wider" style="background:rgba(175,34,69,.9)">● EN LÍNEA</div>
         <div class="absolute bottom-4 left-4"><div class="font-caslon text-lg text-white font-bold">Camila, 36</div><div class="text-micro tracking-wider" style="color:rgba(255,255,255,.5)">SANTIAGO · 0.8 KM</div></div>
       </div>
       <!-- Duplicate set con más fotos -->
-      <div class="flex-shrink-0 w-52 rounded-2xl overflow-hidden relative" style="height:280px"><img loading="lazy" decoding="async" width="208" height="280" src="images/app/mujer4.webp" alt="Andrea" class="w-full h-full object-cover object-top"/><div class="absolute inset-0" style="background:linear-gradient(to top,rgba(26,16,51,.85) 0%,transparent 55%)"></div><div class="absolute top-3 right-3 rounded-full px-2.5 py-1 text-micro text-white tracking-wider" style="background:rgba(175,34,69,.9)">● EN LÍNEA</div><div class="absolute bottom-4 left-4"><div class="font-caslon text-lg text-white font-bold">Andrea, 33</div><div class="text-micro tracking-wider" style="color:rgba(255,255,255,.5)">LIMA · 2.4 KM</div></div></div>
-      <div class="flex-shrink-0 w-52 rounded-2xl overflow-hidden relative" style="height:280px"><img loading="lazy" decoding="async" width="208" height="280" src="images/app/hombre3.webp" alt="Rodrigo" class="w-full h-full object-cover object-top"/><div class="absolute inset-0" style="background:linear-gradient(to top,rgba(26,16,51,.85) 0%,transparent 55%)"></div><div class="absolute bottom-4 left-4"><div class="font-caslon text-lg text-white font-bold">Rodrigo, 42</div><div class="text-micro tracking-wider" style="color:rgba(255,255,255,.5)">SANTIAGO · 1.8 KM</div></div></div>
-      <div class="flex-shrink-0 w-52 rounded-2xl overflow-hidden relative" style="height:280px"><img loading="lazy" decoding="async" width="208" height="280" src="images/app/mujer5.webp" alt="Luciana" class="w-full h-full object-cover object-top"/><div class="absolute inset-0" style="background:linear-gradient(to top,rgba(26,16,51,.85) 0%,transparent 55%)"></div><div class="absolute top-3 right-3 rounded-full px-2.5 py-1 text-micro text-white tracking-wider" style="background:rgba(175,34,69,.9)">● EN LÍNEA</div><div class="absolute bottom-4 left-4"><div class="font-caslon text-lg text-white font-bold">Luciana, 29</div><div class="text-micro tracking-wider" style="color:rgba(255,255,255,.5)">BUENOS AIRES · 3.1 KM</div></div></div>
-      <div class="flex-shrink-0 w-52 rounded-2xl overflow-hidden relative" style="height:280px"><img loading="lazy" decoding="async" width="208" height="280" src="images/app/hombre4.webp" alt="Diego" class="w-full h-full object-cover object-top"/><div class="absolute inset-0" style="background:linear-gradient(to top,rgba(26,16,51,.85) 0%,transparent 55%)"></div><div class="absolute bottom-4 left-4"><div class="font-caslon text-lg text-white font-bold">Diego, 37</div><div class="text-micro tracking-wider" style="color:rgba(255,255,255,.5)">BOGOTÁ · 0.9 KM</div></div></div>
-      <div class="flex-shrink-0 w-52 rounded-2xl overflow-hidden relative" style="height:280px"><img loading="lazy" decoding="async" width="208" height="280" src="images/app/mujer6.webp" alt="Mariana" class="w-full h-full object-cover object-top"/><div class="absolute inset-0" style="background:linear-gradient(to top,rgba(26,16,51,.85) 0%,transparent 55%)"></div><div class="absolute top-3 right-3 rounded-full px-2.5 py-1 text-micro text-white tracking-wider" style="background:rgba(175,34,69,.9)">● EN LÍNEA</div><div class="absolute bottom-4 left-4"><div class="font-caslon text-lg text-white font-bold">Mariana, 35</div><div class="text-micro tracking-wider" style="color:rgba(255,255,255,.5)">CDMX · 4.2 KM</div></div></div>
+      <div class="flex-shrink-0 w-52 rounded-2xl overflow-hidden relative" style="height:280px"><img loading="lazy" decoding="async" width="208" height="280" src="images/app/mujer4.webp" srcset="images/app/mujer4.webp 1x" sizes="(max-width:768px) 150px, 208px" alt="Andrea" class="w-full h-full object-cover object-top"/><div class="absolute inset-0" style="background:linear-gradient(to top,rgba(26,16,51,.85) 0%,transparent 55%)"></div><div class="absolute top-3 right-3 rounded-full px-2.5 py-1 text-micro text-white tracking-wider" style="background:rgba(175,34,69,.9)">● EN LÍNEA</div><div class="absolute bottom-4 left-4"><div class="font-caslon text-lg text-white font-bold">Andrea, 33</div><div class="text-micro tracking-wider" style="color:rgba(255,255,255,.5)">LIMA · 2.4 KM</div></div></div>
+      <div class="flex-shrink-0 w-52 rounded-2xl overflow-hidden relative" style="height:280px"><img loading="lazy" decoding="async" width="208" height="280" src="images/app/hombre3.webp" srcset="images/app/hombre3.webp 1x" sizes="(max-width:768px) 150px, 208px" alt="Rodrigo" class="w-full h-full object-cover object-top"/><div class="absolute inset-0" style="background:linear-gradient(to top,rgba(26,16,51,.85) 0%,transparent 55%)"></div><div class="absolute bottom-4 left-4"><div class="font-caslon text-lg text-white font-bold">Rodrigo, 42</div><div class="text-micro tracking-wider" style="color:rgba(255,255,255,.5)">SANTIAGO · 1.8 KM</div></div></div>
+      <div class="flex-shrink-0 w-52 rounded-2xl overflow-hidden relative" style="height:280px"><img loading="lazy" decoding="async" width="208" height="280" src="images/app/mujer5.webp" srcset="images/app/mujer5.webp 1x" sizes="(max-width:768px) 150px, 208px" alt="Luciana" class="w-full h-full object-cover object-top"/><div class="absolute inset-0" style="background:linear-gradient(to top,rgba(26,16,51,.85) 0%,transparent 55%)"></div><div class="absolute top-3 right-3 rounded-full px-2.5 py-1 text-micro text-white tracking-wider" style="background:rgba(175,34,69,.9)">● EN LÍNEA</div><div class="absolute bottom-4 left-4"><div class="font-caslon text-lg text-white font-bold">Luciana, 29</div><div class="text-micro tracking-wider" style="color:rgba(255,255,255,.5)">BUENOS AIRES · 3.1 KM</div></div></div>
+      <div class="flex-shrink-0 w-52 rounded-2xl overflow-hidden relative" style="height:280px"><img loading="lazy" decoding="async" width="208" height="280" src="images/app/hombre4.webp" srcset="images/app/hombre4.webp 1x" sizes="(max-width:768px) 150px, 208px" alt="Diego" class="w-full h-full object-cover object-top"/><div class="absolute inset-0" style="background:linear-gradient(to top,rgba(26,16,51,.85) 0%,transparent 55%)"></div><div class="absolute bottom-4 left-4"><div class="font-caslon text-lg text-white font-bold">Diego, 37</div><div class="text-micro tracking-wider" style="color:rgba(255,255,255,.5)">BOGOTÁ · 0.9 KM</div></div></div>
+      <div class="flex-shrink-0 w-52 rounded-2xl overflow-hidden relative" style="height:280px"><img loading="lazy" decoding="async" width="208" height="280" src="images/app/mujer6.webp" srcset="images/app/mujer6.webp 1x" sizes="(max-width:768px) 150px, 208px" alt="Mariana" class="w-full h-full object-cover object-top"/><div class="absolute inset-0" style="background:linear-gradient(to top,rgba(26,16,51,.85) 0%,transparent 55%)"></div><div class="absolute top-3 right-3 rounded-full px-2.5 py-1 text-micro text-white tracking-wider" style="background:rgba(175,34,69,.9)">● EN LÍNEA</div><div class="absolute bottom-4 left-4"><div class="font-caslon text-lg text-white font-bold">Mariana, 35</div><div class="text-micro tracking-wider" style="color:rgba(255,255,255,.5)">CDMX · 4.2 KM</div></div></div>
     </div>
   </div>
 </section>
@@ -799,7 +796,7 @@ img{content-visibility:auto}
 <footer class="px-[5%] py-20" style="background:#e8e1da">
   <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10 mb-12">
     <div>
-      <img src="images/logo/logo-color.webp" onerror="this.src='images/logo/logo-color.png'" alt="LUAPP" class="h-14 w-auto mb-4" style="opacity:.8"/>
+      <img src="images/logo/logo-color.webp" width="180" height="56" loading="eager" fetchpriority="high"  alt="LUAPP" class="h-14 w-auto mb-4" style="opacity:.8"/>
       <p class="text-body text-on-surface-variant">La app de encuentros discretos para personas casadas en Latinoamérica.</p>
     </div>
     <div>
@@ -831,26 +828,15 @@ img{content-visibility:auto}
   </div>
 </footer>
 
-<script>
-  // Pause marquee when not visible (saves CPU)
-  const marquee = document.querySelector('.marquee')
-  if (marquee && 'IntersectionObserver' in window) {
-    const obs = new IntersectionObserver(entries => {
-      entries.forEach(e => {
-        marquee.style.animationPlayState = e.isIntersecting ? 'running' : 'paused'
-      })
-    })
-    obs.observe(marquee)
-  }
-
-  window.addEventListener('scroll',()=>{
-    const n=document.getElementById('nav');
-    n.style.boxShadow=window.scrollY>20?'0 4px 24px rgba(175,34,69,.08)':'none';
+<script defer>
+  document.addEventListener('DOMContentLoaded',function(){
+    // Mobile menu
+    var b=document.getElementById('burger');
+    var m=document.getElementById('mob-menu');
+    if(b&&m){b.addEventListener('click',function(){m.classList.toggle('hidden')})}
+    // Close menu on link click
+    if(m){m.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){m.classList.add('hidden')})})}
   });
-  document.getElementById('burger').addEventListener('click',()=>{
-    document.getElementById('mob-menu').classList.toggle('hidden');
-  });
-  document.querySelectorAll('#mob-menu a').forEach(a=>a.addEventListener('click',()=>document.getElementById('mob-menu').classList.add('hidden')));
 </script>
   <!-- Tailwind carga después del contenido crítico -->
   
