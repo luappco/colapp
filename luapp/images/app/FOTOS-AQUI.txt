@@ -1,0 +1,25 @@
+Sube aquí las 18 fotos con estos nombres exactos:
+
+MUJERES:
+mujer1.jpg  → Valentina (aparece en hero + marquee)
+mujer2.jpg  → Isabela
+mujer3.jpg  → Camila
+mujer4.jpg  → Andrea
+mujer5.jpg  → Luciana
+mujer6.jpg  → Mariana
+mujer7.jpg  → (extra)
+mujer8.jpg  → (extra)
+mujer9.jpg  → (extra)
+
+HOMBRES:
+hombre1.jpg → Carlos
+hombre2.jpg → Miguel
+hombre3.jpg → Rodrigo
+hombre4.jpg → Diego
+hombre5.jpg → (extra)
+hombre6.jpg → (extra)
+hombre7.jpg → (extra)
+hombre8.jpg → (extra)
+hombre9.jpg → (extra)
+
+Formato recomendado: JPG, orientación vertical (retrato)

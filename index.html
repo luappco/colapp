@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>LUAPP — App de Encuentros Discretos para Personas Casadas en LATAM</title>
+<meta name="description" content="LUAPP es la app de encuentros extraconyugales más discreta de Latinoamérica. 100% anónimo, seguro y sin rastros."/>
+<link rel="canonical" href="https://luapp.co/"/>
+<link rel="icon" type="image/png" href="favicon.png"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        "primary":"#af2245","primary-container":"#d03d5c","on-primary":"#ffffff","on-primary-container":"#fffbff",
+        "secondary":"#a23e20","tertiary":"#61567d",
+        "surface":"#fff8f1","surface-container-lowest":"#ffffff","surface-container-low":"#f9f3eb",
+        "surface-container":"#f4ede5","surface-container-high":"#eee7df","surface-container-highest":"#e8e1da",
+        "on-surface":"#1e1b17","on-surface-variant":"#594143","inverse-surface":"#33302b",
+        "outline":"#8c7072","outline-variant":"#e0bec1","inverse-primary":"#ffb2ba",
+        "text-primary":"#2A1840","text-muted":"#7A6080",
+        "rose":"#F2C4CE","peach":"#F9D9C8","lavender":"#DDD0EC",
+      },
+      fontFamily: { "caslon":["Libre Caslon Text","Georgia","serif"], "jakarta":["Plus Jakarta Sans","sans-serif"] },
+      fontSize: {
+        "hero":["76px",{lineHeight:"1.05",letterSpacing:"-0.02em",fontWeight:"700"}],
+        "hero-mob":["42px",{lineHeight:"1.1",fontWeight:"700"}],
+        "h2":["50px",{lineHeight:"1.2",fontWeight:"300"}],
+        "h2-mob":["32px",{lineHeight:"1.2",fontWeight:"300"}],
+        "body-lg":["16px",{lineHeight:"1.8",fontWeight:"300"}],
+        "body":["14px",{lineHeight:"1.8",fontWeight:"300"}],
+        "label":["11px",{lineHeight:"1",letterSpacing:"0.15em",fontWeight:"500"}],
+        "micro":["9px",{lineHeight:"1",letterSpacing:"0.2em",fontWeight:"500"}],
+      },
+    }
+  }
+}
+</script>
+<style>
+  body{background:#fff8f1;overflow-x:hidden}
+  .grad{background:linear-gradient(135deg,#af2245 0%,#d03d5c 60%,#f07855 100%)}
+  .grad-text{background:linear-gradient(135deg,#af2245,#f07855);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+  .glass{backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+  .lift{transition:transform .3s ease,box-shadow .3s ease}
+  .lift:hover{transform:translateY(-5px);box-shadow:0 20px 48px rgba(175,34,69,.14)}
+  .material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 300,'GRAD' 0,'opsz' 24}
+  @keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+  .marquee{animation:marquee 35s linear infinite}
+  @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+  .float{animation:float 6s ease-in-out infinite}
+  .float2{animation:float 8s ease-in-out 1.5s infinite}
+  details summary::-webkit-details-marker{display:none}
+  .faq-arrow{transition:transform .3s}
+  details[open] .faq-arrow{transform:rotate(180deg)}
+  .phone-notch{height:20px;background:#1e1b17;display:flex;align-items:center;justify-content:center}
+  .phone-notch-bar{width:56px;height:4px;background:rgba(255,255,255,.2);border-radius:10px}
+</style>
+</head>
+<body class="font-jakarta text-on-surface">
+
+<!-- NAV -->
+<header id="nav" class="fixed top-0 w-full glass z-50 border-b border-outline-variant/30 transition-all duration-300" style="background:rgba(255,248,241,.95)">
+  <div class="max-w-7xl mx-auto px-[5%] py-4 flex items-center justify-between">
+    <a href="/"><img src="images/logo/logo-color.png" alt="LUAPP" class="h-14 w-auto drop-shadow-sm"/></a>
+    <nav class="hidden md:flex items-center gap-8">
+      <a href="#funciona" class="text-body text-on-surface-variant hover:text-primary transition-colors">Cómo funciona</a>
+      <a href="#privacidad" class="text-body text-on-surface-variant hover:text-primary transition-colors">Privacidad</a>
+      <a href="#precios" class="text-body text-on-surface-variant hover:text-primary transition-colors">Precios</a>
+      <a href="#faq" class="text-body text-on-surface-variant hover:text-primary transition-colors">FAQ</a>
+      <a href="#waitlist" class="grad text-white px-7 py-3 rounded-full text-label tracking-widest uppercase shadow-lg hover:scale-105 transition-all" style="box-shadow:0 8px 24px rgba(175,34,69,.3)">Quiero entrar</a>
+    </nav>
+    <button id="burger" class="md:hidden flex flex-col gap-1.5 p-2">
+      <span class="block w-5 h-0.5 bg-on-surface"></span>
+      <span class="block w-5 h-0.5 bg-on-surface"></span>
+      <span class="block w-5 h-0.5 bg-on-surface"></span>
+    </button>
+  </div>
+  <div id="mob-menu" class="hidden md:hidden px-[5%] pb-5 flex flex-col gap-4 border-t border-outline-variant/20">
+    <a href="#funciona" class="text-body-lg text-on-surface-variant py-2">Cómo funciona</a>
+    <a href="#privacidad" class="text-body-lg text-on-surface-variant py-2">Privacidad</a>
+    <a href="#precios" class="text-body-lg text-on-surface-variant py-2">Precios</a>
+    <a href="#faq" class="text-body-lg text-on-surface-variant py-2">FAQ</a>
+    <a href="#waitlist" class="grad text-white px-7 py-3 rounded-full text-label tracking-widest uppercase text-center">Quiero entrar</a>
+  </div>
+</header>
+
+<main class="pt-20">
+
+<!-- HERO -->
+<section class="relative min-h-screen px-[5%] pt-16 pb-20 flex flex-col md:flex-row items-center gap-12 max-w-7xl mx-auto overflow-hidden">
+  <div class="absolute top-0 right-0 w-[500px] h-[500px] rounded-full blur-3xl -z-10 float" style="background:rgba(242,196,206,.25)"></div>
+  <div class="absolute bottom-0 left-0 w-[350px] h-[350px] rounded-full blur-3xl -z-10 float2" style="background:rgba(221,208,236,.22)"></div>
+
+  <div class="flex-1 z-10">
+    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass border border-primary/20 mb-8" style="backdrop-filter:blur(16px);background:rgba(255,248,241,.6)">
+      <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+      <span class="text-label text-primary tracking-widest uppercase">Solo para personas casadas · LATAM</span>
+    </div>
+    <h1 class="font-caslon text-hero-mob md:text-hero text-text-primary mb-6">
+      Tu matrimonio<br/>es tuyo.<br/>
+      <span class="grad-text italic font-normal">Esto también.</span>
+    </h1>
+    <p class="text-body-lg text-on-surface-variant max-w-lg mb-10">LUAPP es la app de encuentros discretos para personas casadas en Colombia, México, Argentina y toda Latinoamérica. Anónima, segura y sin rastros.</p>
+    <div class="flex flex-col sm:flex-row gap-4 mb-10">
+      <a href="#waitlist" class="grad text-white px-10 py-5 rounded-full text-label tracking-widest uppercase text-center hover:scale-105 transition-all" style="box-shadow:0 8px 32px rgba(175,34,69,.35)">Quiero entrar ahora</a>
+      <a href="#funciona" class="px-10 py-5 rounded-full border border-outline text-body text-on-surface hover:bg-surface-container-low transition-colors text-center">Ver cómo funciona →</a>
+    </div>
+    <div class="flex flex-wrap gap-6">
+      <div class="flex items-center gap-2 text-body text-on-surface-variant"><span class="material-symbols-outlined text-primary" style="font-size:18px">verified_user</span>100% anónimo</div>
+      <div class="flex items-center gap-2 text-body text-on-surface-variant"><span class="material-symbols-outlined text-primary" style="font-size:18px">favorite</span>Mujeres gratis</div>
+      <div class="flex items-center gap-2 text-body text-on-surface-variant"><span class="material-symbols-outlined text-primary" style="font-size:18px">visibility_off</span>Sin rastros</div>
+    </div>
+  </div>
+
+  <!-- 3 PHONES -->
+  <div class="flex-1 relative flex items-center justify-center" style="height:600px">
+    <!-- Phone Left: Chat -->
+    <div class="absolute left-0 top-1/2 -translate-y-1/2 bg-white rounded-[32px] border-[6px] border-surface-container-highest z-10 opacity-90 -rotate-6 float2" style="width:210px;box-shadow:0 24px 60px rgba(26,16,51,.16);transform:translateY(-50%) rotate(-7deg) translateX(-8px)">
+      <div class="phone-notch rounded-t-[26px]"><div class="phone-notch-bar"></div></div>
+      <div style="height:380px" class="flex flex-col">
+        <div class="bg-white px-3 py-2 flex items-center gap-2 border-b border-outline-variant/30 flex-shrink-0">
+          <div class="w-7 h-7 rounded-full flex items-center justify-center font-caslon text-sm text-primary" style="background:#F2C4CE">V</div>
+          <div class="flex-1"><div class="text-micro text-on-surface font-medium tracking-wider">VALENTINA</div><div class="text-micro" style="color:#4CAF50">● EN LÍNEA</div></div>
+          <span class="material-symbols-outlined text-outline" style="font-size:14px">lock</span>
+        </div>
+        <div class="flex-1 p-3 flex flex-col gap-2 overflow-hidden" style="background:#f9f3eb">
+          <div class="max-w-[80%] p-2.5 bg-white rounded-2xl rounded-tl-sm border border-outline-variant/30 text-micro text-on-surface leading-relaxed">Aquí todos nos entendemos 😊</div>
+          <div class="max-w-[80%] self-end p-2.5 rounded-2xl rounded-tr-sm text-micro leading-relaxed text-white" style="background:#d03d5c">La discreción primero 🔒</div>
+          <div class="max-w-[80%] p-2.5 bg-white rounded-2xl rounded-tl-sm border border-outline-variant/30 text-micro text-on-surface leading-relaxed">Me alegra encontrarte ✨</div>
+          <div class="max-w-[80%] self-end p-2.5 rounded-2xl rounded-tr-sm text-micro leading-relaxed text-white" style="background:#d03d5c">Yo también 🔥</div>
+        </div>
+        <div class="bg-white p-2.5 flex items-center gap-2 border-t border-outline-variant/20 flex-shrink-0">
+          <div class="flex-1 rounded-full px-3 py-1.5 text-micro text-on-surface-variant" style="background:#f4ede5">Escribe algo...</div>
+          <div class="w-6 h-6 rounded-full grad flex items-center justify-center text-white text-xs">›</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Phone Center: Profiles -->
+    <div class="bg-white z-20 float" style="width:240px;border-radius:34px;border:6px solid #e8e1da;box-shadow:0 32px 80px rgba(26,16,51,.2),0 0 0 1px rgba(175,34,69,.1)">
+      <div class="phone-notch" style="border-radius:28px 28px 0 0"><div class="phone-notch-bar"></div></div>
+      <div style="height:500px" class="flex flex-col overflow-hidden">
+        <div class="px-3 py-2 flex items-center justify-between flex-shrink-0" style="background:#fff8f1">
+          <span class="font-caslon text-sm font-bold" style="color:#2A1840">LU<span class="grad-text">APP</span></span>
+          <div class="rounded-full px-2 py-0.5 text-micro tracking-wider border" style="background:rgba(242,196,206,.25);border-color:rgba(242,196,206,.6);color:#af2245">🔥 50 créditos</div>
+        </div>
+        <div class="flex-1 mx-2.5 mb-2.5 rounded-2xl overflow-hidden relative">
+          <img src="images/app/mujer1.jpg" alt="Valentina" class="w-full h-full object-cover object-top absolute inset-0"/>
+          <div class="absolute inset-0" style="background:linear-gradient(to top,rgba(26,16,51,.9) 0%,transparent 55%)"></div>
+          <div class="absolute bottom-0 left-0 right-0 p-3">
+            <div class="flex gap-1.5 flex-wrap mb-2">
+              <span class="px-2 py-0.5 rounded-full text-micro" style="background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.8)">DISCRETA</span>
+              <span class="px-2 py-0.5 rounded-full text-micro" style="background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.8)">BOGOTÁ</span>
+            </div>
+            <div class="font-caslon text-base font-bold text-white">Valentina, 34</div>
+            <div class="text-micro mb-2.5" style="color:rgba(255,255,255,.5)">📍 1.2 KM · EN LÍNEA</div>
+            <div class="flex justify-center gap-2">
+              <button class="w-9 h-9 rounded-full bg-white flex items-center justify-center text-sm shadow-md">✕</button>
+              <button class="w-9 h-9 rounded-full flex items-center justify-center text-sm" style="background:#33302b">💬</button>
+              <button class="w-9 h-9 rounded-full grad flex items-center justify-center text-sm shadow-md">🔥</button>
+            </div>
+          </div>
+        </div>
+        <div class="bg-white border-t border-outline-variant/20 flex py-2 flex-shrink-0">
+          <div class="flex-1 flex flex-col items-center gap-0.5 text-micro" style="color:#af2245">🔍<div class="w-1 h-1 rounded-full" style="background:#af2245"></div></div>
+          <div class="flex-1 flex flex-col items-center text-micro opacity-40">💬</div>
+          <div class="flex-1 flex flex-col items-center text-micro opacity-40">🔥</div>
+          <div class="flex-1 flex flex-col items-center text-micro opacity-40">👤</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Phone Right: Profile -->
+    <div class="absolute right-0 top-1/2 bg-white rounded-[32px] border-[6px] border-surface-container-highest z-10 opacity-90 rotate-6 float" style="width:210px;top:50%;transform:translateY(-50%) rotate(7deg) translateX(8px);box-shadow:0 24px 60px rgba(26,16,51,.16)">
+      <div class="phone-notch rounded-t-[26px]"><div class="phone-notch-bar"></div></div>
+      <div style="height:380px;background:linear-gradient(160deg,rgba(175,34,69,.08),#fff8f1 50%)" class="flex flex-col items-center p-4 gap-3">
+        <div class="w-16 h-16 rounded-full grad flex items-center justify-center flex-shrink-0" style="box-shadow:0 8px 20px rgba(175,34,69,.3)">
+          <svg viewBox="0 0 100 100" width="64" height="64">
+            <ellipse cx="50" cy="38" rx="20" ry="22" fill="rgba(255,255,255,.9)"/>
+            <ellipse cx="50" cy="80" rx="30" ry="24" fill="rgba(255,255,255,.9)"/>
+            <ellipse cx="50" cy="27" rx="22" ry="16" fill="#3D1F0F"/>
+            <circle cx="42" cy="38" r="2.5" fill="#2A1A22"/>
+            <circle cx="58" cy="38" r="2.5" fill="#2A1A22"/>
+            <path d="M44 46 Q50 51 56 46" stroke="rgba(175,34,69,.8)" stroke-width="2" fill="none" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="font-caslon text-lg font-bold" style="color:#2A1840">Sofía</div>
+        <div class="text-micro text-on-surface-variant tracking-widest">BOGOTÁ · 29 AÑOS</div>
+        <div class="flex gap-5">
+          <div class="text-center"><div class="font-caslon text-xl" style="color:#2A1840">12</div><div class="text-micro text-on-surface-variant tracking-wider">FLECHAZOS</div></div>
+          <div class="text-center"><div class="font-caslon text-xl" style="color:#2A1840">4</div><div class="text-micro text-on-surface-variant tracking-wider">CHATS</div></div>
+          <div class="text-center"><div class="font-caslon text-xl" style="color:#2A1840">50</div><div class="text-micro text-on-surface-variant tracking-wider">CRÉDITOS</div></div>
+        </div>
+        <div class="w-full flex flex-col gap-1.5">
+          <div class="bg-white rounded-xl px-3 py-2 flex items-center gap-2 text-micro text-on-surface border border-outline-variant/30">🔒 Privacidad</div>
+          <div class="bg-white rounded-xl px-3 py-2 flex items-center gap-2 text-micro text-on-surface border border-outline-variant/30">📸 Álbum privado</div>
+          <div class="bg-white rounded-xl px-3 py-2 flex items-center gap-2 text-micro text-on-surface border border-outline-variant/30">🔥 Créditos</div>
+          <div class="bg-white rounded-xl px-3 py-2 flex items-center gap-2 text-micro text-on-surface border border-outline-variant/30">⚙️ Configuración</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BENTO FEATURES -->
+<section class="px-[5%] py-24 max-w-7xl mx-auto" id="funciona">
+  <div class="text-center mb-16">
+    <p class="text-label text-primary tracking-widest uppercase mb-3">Diseñado para lo invisible</p>
+    <h2 class="font-caslon text-h2-mob md:text-h2 text-text-primary mb-5">Seguridad sin concesiones</h2>
+    <p class="text-body-lg text-on-surface-variant max-w-xl mx-auto">No somos una app de citas más. Somos el refugio digital para tu verdadera identidad.</p>
+  </div>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+    <div class="md:col-span-2 bg-white p-10 rounded-[22px] border border-primary/5 lift relative overflow-hidden">
+      <div class="relative z-10">
+        <span class="material-symbols-outlined text-primary text-4xl mb-5 block">shield_lock</span>
+        <h3 class="font-caslon text-3xl text-text-primary mb-4">Crea tu alias hoy</h3>
+        <p class="text-body-lg text-on-surface-variant max-w-md">Regístrate con un alias. Tu nombre real nunca aparece. Tú decides qué mostrar, qué ocultar y con quién compartirlo.</p>
+      </div>
+      <div class="absolute -right-16 -bottom-16 w-64 h-64 rounded-full blur-3xl" style="background:rgba(242,196,206,.2)"></div>
+    </div>
+    <div class="md:row-span-2 p-10 rounded-[22px] text-white lift flex flex-col justify-between" style="background:#d03d5c">
+      <div>
+        <span class="material-symbols-outlined text-white text-4xl mb-5 block">verified_user</span>
+        <h3 class="font-caslon text-3xl mb-4">Encuentra cómplices</h3>
+        <p class="text-body" style="color:rgba(255,255,255,.8)">Todos los miembros están en la misma situación. Sin juicios. Filtra por ciudad, edad y lo que buscas.</p>
+      </div>
+      <div class="mt-8 space-y-3">
+        <div class="flex items-center gap-3 border-t pt-4" style="border-color:rgba(255,255,255,.2)">
+          <span class="material-symbols-outlined text-sm" style="color:rgba(255,255,255,.7)">check_circle</span>
+          <span class="text-label tracking-widest uppercase" style="color:rgba(255,255,255,.7)">Modo incógnito activo</span>
+        </div>
+        <div class="flex items-center gap-3">
+          <span class="material-symbols-outlined text-sm" style="color:rgba(255,255,255,.7)">check_circle</span>
+          <span class="text-label tracking-widest uppercase" style="color:rgba(255,255,255,.7)">Cero rastros</span>
+        </div>
+      </div>
+    </div>
+    <div class="bg-white p-10 rounded-[22px] border border-primary/5 lift">
+      <span class="material-symbols-outlined text-secondary text-4xl mb-5 block">visibility_off</span>
+      <h4 class="font-caslon text-2xl text-text-primary mb-3">Conecta en privado</h4>
+      <p class="text-body text-on-surface-variant">Mensajes privados, fotos con blur y cierre rápido. Lo que pasa en LUAPP, queda en LUAPP.</p>
+    </div>
+    <div class="bg-white p-10 rounded-[22px] border border-primary/5 lift">
+      <span class="material-symbols-outlined text-tertiary text-4xl mb-5 block">fingerprint</span>
+      <h4 class="font-caslon text-2xl text-text-primary mb-3">Acceso biométrico</h4>
+      <p class="text-body text-on-surface-variant">Solo tus ojos pueden abrir LUAPP. FaceID y TouchID para máxima discreción.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PERSONAS MARQUEE -->
+<section class="py-20 overflow-hidden">
+  <div class="text-center mb-14 px-[5%]">
+    <p class="text-label text-primary tracking-widest uppercase mb-3">Personas reales · Conexiones reales</p>
+    <h2 class="font-caslon text-h2-mob md:text-h2 text-text-primary mb-4">Miles buscando lo mismo que tú</h2>
+    <p class="text-body-lg text-on-surface-variant">Discreción garantizada en cada perfil.</p>
+  </div>
+  <div class="overflow-hidden">
+    <div class="flex gap-5 marquee" style="width:max-content">
+      <!-- Set 1 -->
+      <!-- Valentina -->
+      <div class="flex-shrink-0 w-52 rounded-2xl overflow-hidden relative" style="height:280px">
+        <img src="images/app/mujer1.jpg" alt="Valentina" class="w-full h-full object-cover object-top"/>
+        <div class="absolute inset-0" style="background:linear-gradient(to top,rgba(26,16,51,.85) 0%,transparent 55%)"></div>
+        <div class="absolute top-3 right-3 rounded-full px-2.5 py-1 text-micro text-white tracking-wider" style="background:rgba(175,34,69,.9)">● EN LÍNEA</div>
+        <div class="absolute bottom-4 left-4"><div class="font-caslon text-lg text-white font-bold">Valentina, 34</div><div class="text-micro tracking-wider" style="color:rgba(255,255,255,.5)">BOGOTÁ · 1.2 KM</div></div>
+      </div>
+      <!-- Carlos -->
+      <div class="flex-shrink-0 w-52 rounded-2xl overflow-hidden relative" style="height:280px">
+        <img src="images/app/hombre1.jpg" alt="Carlos" class="w-full h-full object-cover object-top"/>
+        <div class="absolute inset-0" style="background:linear-gradient(to top,rgba(26,16,51,.85) 0%,transparent 55%)"></div>
+        <div class="absolute bottom-4 left-4"><div class="font-caslon text-lg text-white font-bold">Carlos, 38</div><div class="text-micro tracking-wider" style="color:rgba(255,255,255,.5)">CDMX · 3.5 KM</div></div>
+      </div>
+      <!-- Isabela -->
+      <div class="flex-shrink-0 w-52 rounded-2xl overflow-hidden relative" style="height:280px">
+        <img src="images/app/mujer2.jpg" alt="Isabela" class="w-full h-full object-cover object-top"/>
+        <div class="absolute inset-0" style="background:linear-gradient(to top,rgba(26,16,51,.85) 0%,transparent 55%)"></div>
+        <div class="absolute top-3 right-3 rounded-full px-2.5 py-1 text-micro text-white tracking-wider" style="background:rgba(175,34,69,.9)">● EN LÍNEA</div>
+        <div class="absolute bottom-4 left-4"><div class="font-caslon text-lg text-white font-bold">Isabela, 31</div><div class="text-micro tracking-wider" style="color:rgba(255,255,255,.5)">MEDELLÍN · 2.1 KM</div></div>
+      </div>
+      <!-- Miguel -->
+      <div class="flex-shrink-0 w-52 rounded-2xl overflow-hidden relative" style="height:280px">
+        <img src="images/app/hombre2.jpg" alt="Miguel" class="w-full h-full object-cover object-top"/>
+        <div class="absolute inset-0" style="background:linear-gradient(to top,rgba(26,16,51,.85) 0%,transparent 55%)"></div>
+        <div class="absolute bottom-4 left-4"><div class="font-caslon text-lg text-white font-bold">Miguel, 41</div><div class="text-micro tracking-wider" style="color:rgba(255,255,255,.5)">BS. AIRES · 5 KM</div></div>
+      </div>
+      <!-- Camila -->
+      <div class="flex-shrink-0 w-52 rounded-2xl overflow-hidden relative" style="height:280px">
+        <img src="images/app/mujer3.jpg" alt="Camila" class="w-full h-full object-cover object-top"/>
+        <div class="absolute inset-0" style="background:linear-gradient(to top,rgba(26,16,51,.85) 0%,transparent 55%)"></div>
+        <div class="absolute top-3 right-3 rounded-full px-2.5 py-1 text-micro text-white tracking-wider" style="background:rgba(175,34,69,.9)">● EN LÍNEA</div>
+        <div class="absolute bottom-4 left-4"><div class="font-caslon text-lg text-white font-bold">Camila, 36</div><div class="text-micro tracking-wider" style="color:rgba(255,255,255,.5)">SANTIAGO · 0.8 KM</div></div>
+      </div>
+      <!-- Duplicate set con más fotos -->
+      <div class="flex-shrink-0 w-52 rounded-2xl overflow-hidden relative" style="height:280px"><img src="images/app/mujer4.jpg" alt="Andrea" class="w-full h-full object-cover object-top"/><div class="absolute inset-0" style="background:linear-gradient(to top,rgba(26,16,51,.85) 0%,transparent 55%)"></div><div class="absolute top-3 right-3 rounded-full px-2.5 py-1 text-micro text-white tracking-wider" style="background:rgba(175,34,69,.9)">● EN LÍNEA</div><div class="absolute bottom-4 left-4"><div class="font-caslon text-lg text-white font-bold">Andrea, 33</div><div class="text-micro tracking-wider" style="color:rgba(255,255,255,.5)">LIMA · 2.4 KM</div></div></div>
+      <div class="flex-shrink-0 w-52 rounded-2xl overflow-hidden relative" style="height:280px"><img src="images/app/hombre3.jpg" alt="Rodrigo" class="w-full h-full object-cover object-top"/><div class="absolute inset-0" style="background:linear-gradient(to top,rgba(26,16,51,.85) 0%,transparent 55%)"></div><div class="absolute bottom-4 left-4"><div class="font-caslon text-lg text-white font-bold">Rodrigo, 42</div><div class="text-micro tracking-wider" style="color:rgba(255,255,255,.5)">SANTIAGO · 1.8 KM</div></div></div>
+      <div class="flex-shrink-0 w-52 rounded-2xl overflow-hidden relative" style="height:280px"><img src="images/app/mujer5.jpg" alt="Luciana" class="w-full h-full object-cover object-top"/><div class="absolute inset-0" style="background:linear-gradient(to top,rgba(26,16,51,.85) 0%,transparent 55%)"></div><div class="absolute top-3 right-3 rounded-full px-2.5 py-1 text-micro text-white tracking-wider" style="background:rgba(175,34,69,.9)">● EN LÍNEA</div><div class="absolute bottom-4 left-4"><div class="font-caslon text-lg text-white font-bold">Luciana, 29</div><div class="text-micro tracking-wider" style="color:rgba(255,255,255,.5)">BUENOS AIRES · 3.1 KM</div></div></div>
+      <div class="flex-shrink-0 w-52 rounded-2xl overflow-hidden relative" style="height:280px"><img src="images/app/hombre4.jpg" alt="Diego" class="w-full h-full object-cover object-top"/><div class="absolute inset-0" style="background:linear-gradient(to top,rgba(26,16,51,.85) 0%,transparent 55%)"></div><div class="absolute bottom-4 left-4"><div class="font-caslon text-lg text-white font-bold">Diego, 37</div><div class="text-micro tracking-wider" style="color:rgba(255,255,255,.5)">BOGOTÁ · 0.9 KM</div></div></div>
+      <div class="flex-shrink-0 w-52 rounded-2xl overflow-hidden relative" style="height:280px"><img src="images/app/mujer6.jpg" alt="Mariana" class="w-full h-full object-cover object-top"/><div class="absolute inset-0" style="background:linear-gradient(to top,rgba(26,16,51,.85) 0%,transparent 55%)"></div><div class="absolute top-3 right-3 rounded-full px-2.5 py-1 text-micro text-white tracking-wider" style="background:rgba(175,34,69,.9)">● EN LÍNEA</div><div class="absolute bottom-4 left-4"><div class="font-caslon text-lg text-white font-bold">Mariana, 35</div><div class="text-micro tracking-wider" style="color:rgba(255,255,255,.5)">CDMX · 4.2 KM</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="grad px-[5%] py-16">
+  <div class="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+    <div><div class="font-caslon text-5xl text-white mb-2" style="font-weight:300">100%</div><div class="text-label tracking-widest uppercase" style="color:rgba(255,255,255,.6)">Anónimo</div></div>
+    <div><div class="font-caslon text-5xl text-white mb-2" style="font-weight:300">♀</div><div class="text-label tracking-widest uppercase" style="color:rgba(255,255,255,.6)">Mujeres gratis</div></div>
+    <div><div class="font-caslon text-5xl text-white mb-2" style="font-weight:300">0</div><div class="text-label tracking-widest uppercase" style="color:rgba(255,255,255,.6)">Datos a terceros</div></div>
+    <div><div class="font-caslon text-5xl text-white mb-2" style="font-weight:300">8+</div><div class="text-label tracking-widest uppercase" style="color:rgba(255,255,255,.6)">Países LATAM</div></div>
+  </div>
+</section>
+
+<!-- PRIVACY -->
+<section class="px-[5%] py-24 text-center" id="privacidad" style="background:linear-gradient(135deg,#DDD0EC 0%,#F2C4CE 50%,#F9D9C8 100%)">
+  <p class="text-label text-primary tracking-widest uppercase mb-3">Tu seguridad primero</p>
+  <h2 class="font-caslon text-h2-mob md:text-h2 text-text-primary mb-4">Tu matrimonio no corre riesgo</h2>
+  <p class="text-body-lg max-w-lg mx-auto mb-12" style="color:rgba(26,16,51,.55)">Diseñamos cada función pensando en que tienes una vida que proteger.</p>
+  <div class="flex flex-wrap justify-center gap-3 max-w-3xl mx-auto">
+    <div class="rounded-full px-5 py-3 text-body text-text-primary flex items-center gap-2 border" style="background:rgba(255,255,255,.7);backdrop-filter:blur(8px);border-color:rgba(255,255,255,.6)">🔒 Alias anónimo</div>
+    <div class="rounded-full px-5 py-3 text-body text-text-primary flex items-center gap-2 border" style="background:rgba(255,255,255,.7);backdrop-filter:blur(8px);border-color:rgba(255,255,255,.6)">👁️ Fotos con blur</div>
+    <div class="rounded-full px-5 py-3 text-body text-text-primary flex items-center gap-2 border" style="background:rgba(255,255,255,.7);backdrop-filter:blur(8px);border-color:rgba(255,255,255,.6)">📵 Notificaciones discretas</div>
+    <div class="rounded-full px-5 py-3 text-body text-text-primary flex items-center gap-2 border" style="background:rgba(255,255,255,.7);backdrop-filter:blur(8px);border-color:rgba(255,255,255,.6)">🚪 Cierre rápido</div>
+    <div class="rounded-full px-5 py-3 text-body text-text-primary flex items-center gap-2 border" style="background:rgba(255,255,255,.7);backdrop-filter:blur(8px);border-color:rgba(255,255,255,.6)">🛡️ Cero datos a terceros</div>
+    <div class="rounded-full px-5 py-3 text-body text-text-primary flex items-center gap-2 border" style="background:rgba(255,255,255,.7);backdrop-filter:blur(8px);border-color:rgba(255,255,255,.6)">💳 Pagos discretos</div>
+    <div class="rounded-full px-5 py-3 text-body text-text-primary flex items-center gap-2 border" style="background:rgba(255,255,255,.7);backdrop-filter:blur(8px);border-color:rgba(255,255,255,.6)">🗑️ Historial borrable</div>
+    <div class="rounded-full px-5 py-3 text-body text-text-primary flex items-center gap-2 border" style="background:rgba(255,255,255,.7);backdrop-filter:blur(8px);border-color:rgba(255,255,255,.6)">📍 Ubicación aproximada</div>
+    <div class="rounded-full px-5 py-3 text-body text-text-primary flex items-center gap-2 border" style="background:rgba(255,255,255,.7);backdrop-filter:blur(8px);border-color:rgba(255,255,255,.6)">🔕 Ícono neutro</div>
+    <div class="rounded-full px-5 py-3 text-body text-text-primary flex items-center gap-2 border" style="background:rgba(255,255,255,.7);backdrop-filter:blur(8px);border-color:rgba(255,255,255,.6)">👤 Perfil invisible</div>
+  </div>
+</section>
+
+<!-- TESTIMONIOS -->
+<section class="px-[5%] py-24" id="testimonios" style="background:rgba(249,243,235,.4)">
+  <div class="text-center mb-16">
+    <p class="text-label text-primary tracking-widest uppercase mb-3">Lo que dicen ellos</p>
+    <h2 class="font-caslon text-h2-mob md:text-h2 text-text-primary mb-4">Voces reales,<br/><span class="italic font-normal" style="color:#af2245">historias discretas</span></h2>
+    <p class="text-body-lg text-on-surface-variant max-w-lg mx-auto">Nombres cambiados para proteger su privacidad. Las historias son reales.</p>
+  </div>
+
+  <!-- Featured testimonial -->
+  <div class="max-w-3xl mx-auto mb-10">
+    <div class="bg-white p-10 md:p-14 rounded-[22px] border border-primary/5 relative overflow-hidden lift">
+      <div class="absolute -top-8 -left-4 font-caslon text-9xl text-primary/6 select-none leading-none">&ldquo;</div>
+      <div class="relative z-10">
+        <p class="font-caslon text-2xl md:text-3xl text-text-primary leading-relaxed mb-8 italic font-normal">
+          "Llevaba 9 años casada y sentía que algo me faltaba. LUAPP me dio un espacio para ser yo misma sin destruir lo que construí. La discreción es real — mi marido nunca supo nada."
+        </p>
+        <div class="flex items-center gap-4">
+          <div class="w-12 h-12 rounded-full grad flex items-center justify-center text-white font-caslon text-xl">V</div>
+          <div>
+            <div class="font-caslon text-lg text-text-primary">Valentina R.</div>
+            <div class="text-label text-on-surface-variant tracking-widest uppercase">Bogotá · 34 años · Casada</div>
+          </div>
+          <div class="ml-auto flex gap-0.5">
+            <span class="text-primary">★★★★★</span>
+          </div>
+        </div>
+      </div>
+      <div class="absolute -bottom-10 -right-10 w-40 h-40 rounded-full blur-3xl" style="background:rgba(242,196,206,.2)"></div>
+    </div>
+  </div>
+
+  <!-- 3 smaller testimonials -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+
+    <div class="bg-white p-8 rounded-[22px] border border-primary/5 lift relative overflow-hidden">
+      <div class="absolute -top-5 -left-2 font-caslon text-7xl select-none leading-none" style="color:rgba(175,34,69,.07)">&ldquo;</div>
+      <p class="text-body-lg text-on-surface-variant mb-6 relative z-10">
+        "Pensé que era imposible tener algo así sin que nadie se enterara. LUAPP me demostró lo contrario. Las notificaciones son completamente discretas."
+      </p>
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full flex items-center justify-content-center items-center justify-center font-caslon text-lg text-primary flex-shrink-0" style="background:#F9D9C8">C</div>
+        <div>
+          <div class="font-caslon text-base text-text-primary">Carlos M.</div>
+          <div class="text-micro text-on-surface-variant tracking-wider uppercase">CDMX · 38 años</div>
+        </div>
+        <div class="ml-auto text-sm text-primary">★★★★★</div>
+      </div>
+    </div>
+
+    <div class="p-8 rounded-[22px] lift relative overflow-hidden" style="background:#33302b">
+      <div class="absolute -top-5 -left-2 font-caslon text-7xl select-none leading-none" style="color:rgba(255,255,255,.05)">&ldquo;</div>
+      <p class="text-body-lg mb-6 relative z-10" style="color:rgba(255,255,255,.75)">
+        "Lo que más me sorprendió fue encontrar personas que realmente entienden mi situación. Sin dramas, sin presiones. Exactamente lo que necesitaba."
+      </p>
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full flex items-center justify-center font-caslon text-lg text-white flex-shrink-0" style="background:#d03d5c">I</div>
+        <div>
+          <div class="font-caslon text-base text-white">Isabela T.</div>
+          <div class="text-micro tracking-wider uppercase" style="color:rgba(255,255,255,.4)">MEDELLÍN · 31 AÑOS</div>
+        </div>
+        <div class="ml-auto text-sm" style="color:#ffb2ba">★★★★★</div>
+      </div>
+    </div>
+
+    <div class="p-8 rounded-[22px] lift relative overflow-hidden border border-primary/10" style="background:linear-gradient(135deg,rgba(242,196,206,.2),rgba(221,208,236,.2))">
+      <div class="absolute -top-5 -left-2 font-caslon text-7xl select-none leading-none" style="color:rgba(175,34,69,.07)">&ldquo;</div>
+      <p class="text-body-lg text-on-surface-variant mb-6 relative z-10">
+        "El ícono de la app en mi teléfono no dice nada. Mis notificaciones no muestran contenido. Pensaron en todo. Llevan 8 meses siendo mi secreto mejor guardado."
+      </p>
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full flex items-center justify-center font-caslon text-lg text-primary flex-shrink-0" style="background:#DDD0EC">S</div>
+        <div>
+          <div class="font-caslon text-base text-text-primary">Sofía A.</div>
+          <div class="text-micro text-on-surface-variant tracking-wider uppercase">LIMA · 29 AÑOS</div>
+        </div>
+        <div class="ml-auto text-sm text-primary">★★★★★</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Trust counter -->
+  <div class="mt-14 text-center">
+    <p class="text-body text-on-surface-variant">Únete a miles de personas que ya confían en LUAPP</p>
+    <div class="flex justify-center items-center gap-2 mt-4">
+      <div class="flex -space-x-2">
+        <div class="w-8 h-8 rounded-full border-2 border-white flex items-center justify-center text-xs font-caslon text-white" style="background:#d03d5c">V</div>
+        <div class="w-8 h-8 rounded-full border-2 border-white flex items-center justify-center text-xs font-caslon text-primary" style="background:#F9D9C8">C</div>
+        <div class="w-8 h-8 rounded-full border-2 border-white flex items-center justify-center text-xs font-caslon text-white" style="background:#8B3560">I</div>
+        <div class="w-8 h-8 rounded-full border-2 border-white flex items-center justify-center text-xs font-caslon text-primary" style="background:#DDD0EC">S</div>
+        <div class="w-8 h-8 rounded-full border-2 border-white flex items-center justify-center text-xs text-white" style="background:#33302b">+</div>
+      </div>
+      <span class="text-body-lg font-caslon text-text-primary">+2,400 personas ya dentro</span>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="px-[5%] py-24" id="faq">
+  <div class="max-w-3xl mx-auto">
+    <div class="text-center mb-14">
+      <p class="text-label text-primary tracking-widest uppercase mb-3">Preguntas frecuentes</p>
+      <h2 class="font-caslon text-h2-mob md:text-h2 text-text-primary">Todo lo que necesitas saber</h2>
+    </div>
+    <div class="space-y-4">
+      <details class="bg-white rounded-[22px] border border-primary/5 overflow-hidden group">
+        <summary class="flex items-center justify-between p-7 cursor-pointer list-none"><span class="font-caslon text-xl text-text-primary">¿Es LUAPP completamente discreta?</span><span class="material-symbols-outlined text-primary faq-arrow">expand_more</span></summary>
+        <div class="px-7 pb-7 text-body-lg text-on-surface-variant">Sí. Alias en lugar de nombres reales, fotos con blur, notificaciones sin preview e ícono neutro. Tu pareja nunca sabrá que usas la app.</div>
+      </details>
+      <details class="bg-white rounded-[22px] border border-primary/5 overflow-hidden">
+        <summary class="flex items-center justify-between p-7 cursor-pointer list-none"><span class="font-caslon text-xl text-text-primary">¿Las mujeres usan LUAPP gratis?</span><span class="material-symbols-outlined text-primary faq-arrow">expand_more</span></summary>
+        <div class="px-7 pb-7 text-body-lg text-on-surface-variant">Sí, siempre. Las mujeres tienen acceso gratuito permanente. Los hombres apoyan con créditos para mensajes y funciones premium.</div>
+      </details>
+      <details class="bg-white rounded-[22px] border border-primary/5 overflow-hidden">
+        <summary class="flex items-center justify-between p-7 cursor-pointer list-none"><span class="font-caslon text-xl text-text-primary">¿Cómo aparece el cargo en mi banco?</span><span class="material-symbols-outlined text-primary faq-arrow">expand_more</span></summary>
+        <div class="px-7 pb-7 text-body-lg text-on-surface-variant">Bajo un nombre genérico de servicios digitales. Nunca aparece "LUAPP" en tu estado de cuenta.</div>
+      </details>
+      <details class="bg-white rounded-[22px] border border-primary/5 overflow-hidden">
+        <summary class="flex items-center justify-between p-7 cursor-pointer list-none"><span class="font-caslon text-xl text-text-primary">¿Es una alternativa a Gleeden?</span><span class="material-symbols-outlined text-primary faq-arrow">expand_more</span></summary>
+        <div class="px-7 pb-7 text-body-lg text-on-surface-variant">Sí. LUAPP es la alternativa latinoamericana a Gleeden, con MercadoPago, PayPal y soporte en español.</div>
+      </details>
+      <details class="bg-white rounded-[22px] border border-primary/5 overflow-hidden">
+        <summary class="flex items-center justify-between p-7 cursor-pointer list-none"><span class="font-caslon text-xl text-text-primary">¿Puedo cancelar cuando quiera?</span><span class="material-symbols-outlined text-primary faq-arrow">expand_more</span></summary>
+        <div class="px-7 pb-7 text-body-lg text-on-surface-variant">Sí. Sin contratos ni compromisos. Cancelas desde tu perfil en cualquier momento.</div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- WAITLIST -->
+<section class="px-[5%] py-24 text-center relative overflow-hidden" id="waitlist" style="background:#33302b">
+  <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[500px] h-[500px] rounded-full blur-3xl pointer-events-none" style="background:rgba(175,34,69,.08)"></div>
+  <div class="relative z-10 max-w-2xl mx-auto">
+    <p class="text-label tracking-widest uppercase mb-4" style="color:#ffb2ba">Únete hoy</p>
+    <h2 class="font-caslon text-h2-mob md:text-h2 text-white mb-5">¿Lista para tu<br/><span class="italic font-normal" style="color:#F2C4CE">primer secreto?</span></h2>
+    <p class="text-body-lg mb-10" style="color:rgba(255,255,255,.4)">Las primeras 500 mujeres entran gratis para siempre.</p>
+    <form action="/api/waitlist" method="POST" class="flex rounded-full overflow-hidden max-w-md mx-auto mb-4 border" style="box-shadow:0 8px 32px rgba(175,34,69,.25);border-color:rgba(175,34,69,.3)">
+      <input type="email" name="email" placeholder="tu@email.com" required class="flex-1 border-none px-7 py-4 text-white text-body outline-none font-jakarta" style="background:rgba(255,255,255,.05);color:white"/>
+      <button type="submit" class="grad px-7 py-4 text-white text-label tracking-widest uppercase whitespace-nowrap hover:opacity-90 transition-opacity">Quiero entrar</button>
+    </form>
+    <p class="text-micro tracking-widest" style="color:rgba(255,255,255,.18)">SIN SPAM · 100% ANÓNIMO · TU PAREJA NUNCA SABRÁ</p>
+  </div>
+</section>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="px-[5%] py-20" style="background:#e8e1da">
+  <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10 mb-12">
+    <div>
+      <img src="images/logo/logo-color.png" alt="LUAPP" class="h-14 w-auto mb-4" style="opacity:.8"/>
+      <p class="text-body text-on-surface-variant">La app de encuentros discretos para personas casadas en Latinoamérica.</p>
+    </div>
+    <div>
+      <div class="text-label text-primary tracking-widest uppercase mb-5">Sitio</div>
+      <ul class="space-y-3">
+        <li><a href="#funciona" class="text-body text-on-surface-variant hover:text-primary transition-colors">Cómo funciona</a></li>
+        <li><a href="#privacidad" class="text-body text-on-surface-variant hover:text-primary transition-colors">Privacidad</a></li>
+        <li><a href="#precios" class="text-body text-on-surface-variant hover:text-primary transition-colors">Precios</a></li>
+        <li><a href="#faq" class="text-body text-on-surface-variant hover:text-primary transition-colors">FAQ</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="text-label text-primary tracking-widest uppercase mb-5">Contacto</div>
+      <ul class="space-y-3">
+        <li><a href="mailto:hola@luapp.co" class="text-body text-on-surface-variant hover:text-primary transition-colors">hola@luapp.co</a></li>
+        <li><a href="https://instagram.com/luapp" target="_blank" rel="noopener" class="text-body text-on-surface-variant hover:text-primary transition-colors">Instagram</a></li>
+        <li><a href="https://tiktok.com/@luapp" target="_blank" rel="noopener" class="text-body text-on-surface-variant hover:text-primary transition-colors">TikTok</a></li>
+        <li><a href="https://twitter.com/luapp" target="_blank" rel="noopener" class="text-body text-on-surface-variant hover:text-primary transition-colors">X (Twitter)</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="max-w-6xl mx-auto pt-8 border-t border-outline-variant/30 flex flex-col md:flex-row items-center justify-between gap-4">
+    <p class="text-micro text-on-surface-variant tracking-widest" style="opacity:.4">© 2025 LUAPP · SOLO PARA MAYORES DE 18 AÑOS</p>
+    <div class="flex gap-6">
+      <a href="/privacidad" class="text-micro text-on-surface-variant hover:text-primary tracking-widest transition-colors" style="opacity:.4">PRIVACIDAD</a>
+      <a href="/terminos" class="text-micro text-on-surface-variant hover:text-primary tracking-widest transition-colors" style="opacity:.4">TÉRMINOS</a>
+      <a href="/cookies" class="text-micro text-on-surface-variant hover:text-primary tracking-widest transition-colors" style="opacity:.4">COOKIES</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  window.addEventListener('scroll',()=>{
+    const n=document.getElementById('nav');
+    n.style.boxShadow=window.scrollY>20?'0 4px 24px rgba(175,34,69,.08)':'none';
+  });
+  document.getElementById('burger').addEventListener('click',()=>{
+    document.getElementById('mob-menu').classList.toggle('hidden');
+  });
+  document.querySelectorAll('#mob-menu a').forEach(a=>a.addEventListener('click',()=>document.getElementById('mob-menu').classList.add('hidden')));
+</script>
+</body>
+</html>
